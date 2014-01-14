@@ -1,0 +1,18 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+#make commits smaller but need to be built on client befor being used
+*.sdf
+*.suo
+Debug
