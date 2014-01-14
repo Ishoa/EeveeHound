@@ -16,9 +16,11 @@ Grid Based OverWorld;
 
 To Do List
 ==========
-Menue System;
-Cutscene System;
-Battle System;
-Stealth System;
-Turn Based AI;
-Figure out Items and gameplay elements;
+Menue System
+
+Cutscene System
+
+Battle System
+Stealth System
+Turn Based AI
+Figure out Items and gameplay elements
