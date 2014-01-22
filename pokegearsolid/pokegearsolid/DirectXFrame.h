@@ -39,5 +39,6 @@ public:
 	void Render(cam &caminf,D3Object[],int NumObjs,renderInfo[],int NumSprit,TextStruct[],int NumText);
 	void LoadTex(LPCWSTR FileName,UINT Width,UINT Height,UINT MipLevels,DWORD Usage,D3DFORMAT Format,D3DPOOL Pool,DWORD Filter,DWORD MipFilter,D3DCOLOR ColorKey,D3DXIMAGE_INFO *SrcInfo,PALETTEENTRY *pPalette,LPDIRECT3DTEXTURE9 *Tex);
 	void CreateCube(D3Object&,float height,float width,float depth);
+	void CreateUncenteredCube(D3Object&,float height,float width,float depth);
 	void Shutdown();
 };

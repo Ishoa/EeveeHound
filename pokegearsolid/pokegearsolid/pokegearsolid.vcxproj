@@ -78,13 +78,17 @@
     <ClInclude Include="DirectXFrame.h" />
     <ClInclude Include="dxinput.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PokeGear.h" />
+    <ClInclude Include="Stealth.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXFrame.cpp" />
     <ClCompile Include="dxinput.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PokeGear.cpp" />
+    <ClCompile Include="Stealth.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>

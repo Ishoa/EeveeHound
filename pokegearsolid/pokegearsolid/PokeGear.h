@@ -3,6 +3,8 @@
 #include "DirectXFrame.h"
 #include "dxinput.h"
 #include "Map.h"
+#include "Stealth.h"
+#include "PlayerState.h"
 
 #define max3d 100
 #define max2d 100
@@ -24,6 +26,8 @@ private:
 	TextStruct Text[maxtext];
 	TextureStruc textures[maxtexture];
 	D3DMATERIAL9 materials[10];
+	PlayerState curPlay;
+	Stealth sneak;
 public:
 	PokeGear();
 	void init(HWND& hWnd, HINSTANCE& hInst, bool bWindowed);
