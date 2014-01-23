@@ -58,10 +58,11 @@ void PokeGear::init(HWND& hWnd, HINSTANCE& hInst, bool bWindowed)
 void PokeGear::update()
 {
 	Pos temp;
-	int numobjs = 0;
+	int numobjs = 0,numSprits = 0,numText = 0;
 	input.Update(keyboard,mouse);
 	//movement demo
 	sneak.Update(keyboard,mouse,curPlay);
+	sneak.getRend(D3Objs,numobjs,Sprites,numSprits,Text,numText);
 	temp = curPlay.getRen();
 	D3Objs[numobjs] = Models[0];
 	D3DXMatrixTranslation(&D3Objs[numobjs].matrix,temp.X,temp.Y,temp.Z);

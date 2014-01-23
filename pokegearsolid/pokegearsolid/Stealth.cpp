@@ -6,7 +6,8 @@ Stealth::Stealth()
 
 void Stealth::init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat,Texture text)
 {
-	CurMap = Map(20,20,floorbase,floormat,wallmat,text);
+	//CurMap.CreMap(20,20,floorbase,floormat,wallmat,text);
+	CurMap=Map(20,20,floorbase,floormat,wallmat,text);
 }
 
 void Stealth::Update(char keyboard[],DIMOUSESTATE2& mouse,PlayerState& player)

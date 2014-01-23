@@ -4,6 +4,8 @@
 
 Map::Map()
 {
+	XSize = 0;
+	YSize = 0;
 }
 
 Map::Map(int X,int Y,D3Object& base,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat,Texture text)
@@ -28,7 +30,8 @@ Map::Map(int X,int Y,D3Object& base,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat
 	wallbase.objMat = wallmat;
 	ZeroMemory(&floor.matrix,sizeof(floor.matrix));
 	ZeroMemory(&wallbase.matrix,sizeof(wallbase.matrix));
-	D3DXMatrixScaling(&floor.matrix,XSize,YSize,1);
+	D3DXMatrixTranslation(&floor.matrix,0,0,0);
+	D3DXMatrixScaling(&floor.matrix,XSize,1,YSize);
 	floor.objTex = text;
 	wallbase.objTex = text;
 }
@@ -42,27 +45,32 @@ bool Map::valid(int X,int Y)
 	return false;
 }
 
-bool Map::CreMap(int X,int Y)
+bool Map::CreMap(int X,int Y,D3Object& base,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat,Texture text)
 {
-	if(X>0&&Y>0)
+	world = new grid*[X];
+	for(int i = 0;i<X;++i)
 	{
-		world = new grid*[X];
-		for(int i = 0;i<X;++i)
+		world[i] = new grid[Y];
+		for(int f = 0;f<Y;++f)
 		{
-			world[i] = new grid[Y];
-			for(int f = 0;f<Y;++f)
-			{
-				world[i][f].worldPos.X = i*gridsize+gridoffset;
-				world[i][f].worldPos.Y = f*gridsize+gridoffset;
-				world[i][f].worldPos.Z = 0;
-			}
+			world[i][f].worldPos.X = i*gridsize+gridoffset;
+			world[i][f].worldPos.Y = f*gridsize+gridoffset;
+			world[i][f].worldPos.Z = 0;
 		}
-		XSize = X;
-		YSize = Y;
-		D3DXMatrixScaling(&floor.matrix,XSize,YSize,1);
-		return true;
 	}
-	return false;
+	XSize = X;
+	YSize = Y;
+
+	floor = base;
+	wallbase = base;
+	floor.objMat = floormat;
+	wallbase.objMat = wallmat;
+	ZeroMemory(&floor.matrix,sizeof(floor.matrix));
+	ZeroMemory(&wallbase.matrix,sizeof(wallbase.matrix));
+	D3DXMatrixScaling(&floor.matrix,XSize,1,YSize);
+	floor.objTex = text;
+	wallbase.objTex = text;
+	return true;
 }
 
 bool Map::GetWorldPos(int x,int y,Pos& worldp)
@@ -77,13 +85,16 @@ bool Map::GetWorldPos(int x,int y,Pos& worldp)
 
 void Map::cleanup()
 {
-	for(int i = 0;i<XSize;++i)
+	if(XSize!=0&&YSize!=0)
 	{
-		delete [] world[i];
+		for(int i = 0;i<XSize;++i)
+		{
+			delete [] world[i];
+		}
+		delete [] world;
+		XSize = 0;
+		YSize = 0;
 	}
-	delete [] world;
-	XSize = 0;
-	YSize = 0;
 }
 
 bool Map::addWall(Pos pos1,Pos pos2)
@@ -130,6 +141,27 @@ bool Map::display(D3Object world[],int &objs)
 	world[objs] = floor;
 	++objs;
 	return true;
+}
+
+Map& Map::operator=(const Map& temp)
+{
+	cleanup();
+	XSize = temp.XSize;
+	YSize = temp.YSize;
+	world = new grid*[XSize];
+	for(int i = 0;i<XSize;++i)
+	{
+		world[i] = new grid[YSize];
+		for(int f = 0;f<YSize;++f)
+		{
+			world[i][f].worldPos.X = i*gridsize+gridoffset;
+			world[i][f].worldPos.Y = f*gridsize+gridoffset;
+			world[i][f].worldPos.Z = 0;
+		}
+	}
+	floor = temp.floor;
+	wallbase = temp.wallbase;
+	return *this;
 }
 
 Map::~Map()
