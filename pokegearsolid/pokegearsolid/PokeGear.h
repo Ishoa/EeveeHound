@@ -28,6 +28,7 @@ private:
 	D3DMATERIAL9 materials[10];
 	PlayerState curPlay;
 	Stealth sneak;
+	bool bCanInput;
 public:
 	PokeGear();
 	void init(HWND& hWnd, HINSTANCE& hInst, bool bWindowed);

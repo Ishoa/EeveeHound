@@ -13,8 +13,8 @@ struct grid
 
 struct wall
 {
-	Pos point1;
-	Pos point2;
+	Pos Size;
+	Pos loc;
 };
 
 class Map

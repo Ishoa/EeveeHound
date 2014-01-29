@@ -18,7 +18,7 @@ Map::Map(int X,int Y,D3Object& base,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat
 		{
 			world[i][f].worldPos.X = i*gridsize+gridoffset;
 			world[i][f].worldPos.Y = f*gridsize+gridoffset;
-			world[i][f].worldPos.Z = 0;
+			world[i][f].worldPos.Z = 1;
 		}
 	}
 	XSize = X;
@@ -31,7 +31,7 @@ Map::Map(int X,int Y,D3Object& base,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat
 	ZeroMemory(&floor.matrix,sizeof(floor.matrix));
 	ZeroMemory(&wallbase.matrix,sizeof(wallbase.matrix));
 	D3DXMatrixTranslation(&floor.matrix,0,0,0);
-	D3DXMatrixScaling(&floor.matrix,XSize,1,YSize);
+	D3DXMatrixScaling(&floor.matrix,XSize*gridsize,YSize*gridsize,1);
 	floor.objTex = text;
 	wallbase.objTex = text;
 }
@@ -55,7 +55,7 @@ bool Map::CreMap(int X,int Y,D3Object& base,D3DMATERIAL9* floormat,D3DMATERIAL9*
 		{
 			world[i][f].worldPos.X = i*gridsize+gridoffset;
 			world[i][f].worldPos.Y = f*gridsize+gridoffset;
-			world[i][f].worldPos.Z = 0;
+			world[i][f].worldPos.Z = 1;
 		}
 	}
 	XSize = X;
@@ -95,11 +95,13 @@ void Map::cleanup()
 		XSize = 0;
 		YSize = 0;
 	}
+	walls.clear();
 }
 
 bool Map::addWall(Pos pos1,Pos pos2)
 {
 	int XStart, XEnd, YStart,YEnd;
+	wall temp;
 	if(pos1.X >= 0&&pos2.X >= 0&&pos1.Y<YSize&&pos2.Y<YSize)
 	{
 		//set x range
@@ -132,14 +134,34 @@ bool Map::addWall(Pos pos1,Pos pos2)
 				world[x][y].ground = false;
 			}
 		}
+		//add wall to list
+		temp.loc = world[XEnd][YEnd].worldPos;
+		temp.loc.X -= gridoffset;
+		temp.loc.Y += gridoffset;
+		temp.Size.X = (XStart-XEnd+1)*gridsize;
+		temp.Size.Y = (YStart-YEnd-1)*gridsize;
+		walls.push_back(temp);
+		return true;
 	}
 	return false;
 }
 
 bool Map::display(D3Object world[],int &objs)
 {
+	int temp;
+	D3DXMATRIX loc, scale;
 	world[objs] = floor;
 	++objs;
+	temp = walls.size();
+	for(int i = 0;i<temp;++i)
+	{
+		D3DXMatrixIdentity(&wallbase.matrix);
+		D3DXMatrixTranslation(&loc,walls[i].loc.X,walls[i].loc.Y,walls[i].loc.Z);
+		D3DXMatrixScaling(&scale,walls[i].Size.X,walls[i].Size.Y,-5);
+		wallbase.matrix = scale*loc;
+		world[objs] = wallbase;
+		++objs;
+	}
 	return true;
 }
 
@@ -156,7 +178,7 @@ Map& Map::operator=(const Map& temp)
 		{
 			world[i][f].worldPos.X = i*gridsize+gridoffset;
 			world[i][f].worldPos.Y = f*gridsize+gridoffset;
-			world[i][f].worldPos.Z = 0;
+			world[i][f].worldPos.Z = 1;
 		}
 	}
 	floor = temp.floor;
