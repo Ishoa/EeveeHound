@@ -8,6 +8,7 @@ struct grid
 {
 	bool ground:true;
 	bool empty:true;
+	int cost;
 	Pos worldPos;
 };
 
@@ -32,6 +33,7 @@ public:
 	bool display(D3Object world[],int &objs);
 	bool CreMap(int x,int y,D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat,Texture);
 	bool GetWorldPos(int x,int y,Pos&);
+	bool getCost(int x,int y,int& cost);
 	void cleanup();
 	Map& operator=(const Map& temp);
 	~Map();

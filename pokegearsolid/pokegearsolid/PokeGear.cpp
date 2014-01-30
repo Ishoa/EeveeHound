@@ -4,7 +4,7 @@ PokeGear::PokeGear()
 {
 	//cam setup
 	camera.cam_up_vec = D3DXVECTOR3(0,1,0);
-	camera.cam_pos = D3DXVECTOR3(0,0,-10);
+	camera.cam_pos = D3DXVECTOR3(0,-1,-10);
 	camera.cam_look_pos = D3DXVECTOR3(0,0,0);
 	bCanInput = true;
 }
@@ -54,6 +54,7 @@ void PokeGear::init(HWND& hWnd, HINSTANCE& hInst, bool bWindowed)
 	Models[1].objTex = textures[0].objTex;
 	//end art load
 	sneak.init(Models[1],&materials[1],&materials[2],textures[0].objTex);
+	sneak.setPlayPos(curPlay,0,0);
 }
 
 void PokeGear::update()

@@ -18,7 +18,8 @@ Map::Map(int X,int Y,D3Object& base,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat
 		{
 			world[i][f].worldPos.X = i*gridsize+gridoffset;
 			world[i][f].worldPos.Y = f*gridsize+gridoffset;
-			world[i][f].worldPos.Z = 1;
+			world[i][f].worldPos.Z = 0;
+			world[i][f].cost = 1;
 		}
 	}
 	XSize = X;
@@ -55,7 +56,7 @@ bool Map::CreMap(int X,int Y,D3Object& base,D3DMATERIAL9* floormat,D3DMATERIAL9*
 		{
 			world[i][f].worldPos.X = i*gridsize+gridoffset;
 			world[i][f].worldPos.Y = f*gridsize+gridoffset;
-			world[i][f].worldPos.Z = 1;
+			world[i][f].worldPos.Z = 0;
 		}
 	}
 	XSize = X;
@@ -132,13 +133,14 @@ bool Map::addWall(Pos pos1,Pos pos2)
 			for(int y = YStart;y<=YEnd;++y)
 			{
 				world[x][y].ground = false;
+				world[x][y].cost = 0;
 			}
 		}
 		//add wall to list
-		temp.loc = world[XEnd][YEnd].worldPos;
+		temp.loc = world[XStart][YEnd].worldPos;
 		temp.loc.X -= gridoffset;
 		temp.loc.Y += gridoffset;
-		temp.Size.X = (XStart-XEnd+1)*gridsize;
+		temp.Size.X = (XEnd-XStart+1)*gridsize;
 		temp.Size.Y = (YStart-YEnd-1)*gridsize;
 		walls.push_back(temp);
 		return true;

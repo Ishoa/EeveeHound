@@ -28,5 +28,5 @@ void PlayerState::setPos(int locx,int locy,int renx,int reny)
 
 	rendPos.X = renx;
 	rendPos.Y = reny;
-	rendPos.Z = 0;
+	rendPos.Z = -2.0f;
 }

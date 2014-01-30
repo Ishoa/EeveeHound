@@ -20,6 +20,12 @@ void Stealth::init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wall
 	temp2.X=3;
 	temp2.Y=5;
 	CurMap.addWall(temp1,temp2);
+
+	temp1.X = 6;
+	temp1.Y = 5;
+	temp2.X = 4;
+	temp2.Y = 8;
+	CurMap.addWall(temp1,temp2);
 }
 
 void Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,PlayerState& player)
@@ -71,6 +77,21 @@ void Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,Player
 		takeinput = true;
 	}
 
+}
+
+bool Stealth::setPlayPos(PlayerState& player,int x,int y)
+{
+	Pos loc,rend;
+	loc.X = x;
+	loc.Y = y;
+	loc.Z = 0;
+	if(CurMap.valid(x,y))
+	{
+		CurMap.GetWorldPos(x,y,rend);
+		player.setPos(loc.X,loc.Y,rend.X,rend.Y);
+		return true;
+	}
+	return false;
 }
 
 void Stealth::getRend(D3Object objs[],int& NumObjs,renderInfo sprites[],int& NumSprit,TextStruct text[],int& NumText)
