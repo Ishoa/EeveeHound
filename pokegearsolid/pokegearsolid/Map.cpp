@@ -68,7 +68,7 @@ bool Map::CreMap(int X,int Y,D3Object& base,D3DMATERIAL9* floormat,D3DMATERIAL9*
 	wallbase.objMat = wallmat;
 	ZeroMemory(&floor.matrix,sizeof(floor.matrix));
 	ZeroMemory(&wallbase.matrix,sizeof(wallbase.matrix));
-	D3DXMatrixScaling(&floor.matrix,XSize,1,YSize);
+	D3DXMatrixScaling(&floor.matrix,XSize*gridsize,YSize*gridsize,1);
 	floor.objTex = text;
 	wallbase.objTex = text;
 	return true;

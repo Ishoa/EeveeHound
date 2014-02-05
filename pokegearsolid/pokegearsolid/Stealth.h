@@ -1,11 +1,16 @@
 #include "Map.h"
 #include "PlayerState.h"
+#include "EntAI.h"
+#include <fstream>
+#include <vector>
 
 class Stealth
 {
 private:
 	Map CurMap;
 	Pos PlayerPos;
+	std::vector<EntAI> AIList;
+	std::vector<AINode> NodeList;
 public:
 	Stealth();
 	void init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat,Texture text);

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <fstream>
 #include "Defines.h"
 #include <vector>
+#include "EntBase.h"
 
 struct grid
 {
