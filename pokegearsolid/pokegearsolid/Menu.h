@@ -22,7 +22,7 @@ public:
 	bool getPushed(int &buttonPushed,bool&);
 	void Update(char keyboard[],DIMOUSESTATE2& mouse,bool &pushed);
 	void setMouseSprite(renderInfo sprite);
-	void GetRender(renderInfo&,TextStruct[]);
+	void GetRender(renderInfo&,int& numSprite,TextStruct[],int& numText);
 	void getMousePos(int &X,int &Y);
 	void reset();
 	void setRes(int w,int h);

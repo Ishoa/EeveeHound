@@ -46,6 +46,15 @@ bool Map::valid(int X,int Y)
 	return false;
 }
 
+bool Map::empt(int X,int Y)
+{
+	if(X>=0&&X<XSize&&Y>=0&&Y<YSize)
+	{
+		return world[X][Y].empty;
+	}
+	return false;
+}
+
 bool Map::CreMap(int X,int Y,D3Object& base,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat,Texture text)
 {
 	world = new grid*[X];
@@ -57,6 +66,9 @@ bool Map::CreMap(int X,int Y,D3Object& base,D3DMATERIAL9* floormat,D3DMATERIAL9*
 			world[i][f].worldPos.X = i*gridsize+gridoffset;
 			world[i][f].worldPos.Y = f*gridsize+gridoffset;
 			world[i][f].worldPos.Z = 0;
+			world[i][f].ground = true;
+			world[i][f].empty = true;
+			world[i][f].cost = 1;
 		}
 	}
 	XSize = X;
@@ -82,6 +94,22 @@ bool Map::GetWorldPos(int x,int y,Pos& worldp)
 		return true;
 	}
 	return false;
+}
+
+void Map::setEmpty(int X,int Y)
+{
+	if(X>=0&&X<XSize&&Y>=0&&Y<YSize)
+	{
+		world[X][Y].empty = true;
+	}
+}
+
+void Map::setNotEmpty(int X,int Y)
+{
+	if(X>=0&&X<XSize&&Y>=0&&Y<YSize)
+	{
+		world[X][Y].empty = false;
+	}
 }
 
 void Map::cleanup()

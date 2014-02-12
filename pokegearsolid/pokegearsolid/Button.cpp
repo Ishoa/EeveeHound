@@ -15,15 +15,45 @@ Button::Button()
 	drawInfo.rec.bottom = 10;
 	defColor = D3DCOLOR_XRGB(255,255,255);
 	higColor = D3DCOLOR_XRGB(255,0,255);
+	width = 800;
+	height = 600;
 }
 
 void Button::setLoc(float tE,float bE,float lE,float rE)
 {
+	if(tE<=1.0f&&bE<=1.0f&&lE<=1.0f&&rE<=1.0f)
+	{
+		tE *= height;
+		bE *= height;
+		lE *= width;
+		rE *= width;
+	}
 	drawInfo.rec.top = tE;
 	drawInfo.rec.bottom = bE;
 	drawInfo.rec.left = lE;
 	drawInfo.rec.right = rE;
 }
+
+void Button::setRes(int W,int H)
+{
+	float top,bottom,left,right,hei,wid;
+	wid = width;
+	hei = height;
+	//set height to float version
+	top = drawInfo.rec.top/hei;
+	bottom = drawInfo.rec.bottom/hei;
+	left = drawInfo.rec.left/wid;
+	right = drawInfo.rec.right/wid;
+	//change height and width to new values
+	height = H;
+	width = W;
+	//move button to new location
+	drawInfo.rec.top = top*height;
+	drawInfo.rec.bottom = bottom*height;
+	drawInfo.rec.left = left*width;
+	drawInfo.rec.right = right*width;
+}
+
 void Button::getLoc(float &tE,float &bE,float &lE,float &rE)
 {
 	tE = drawInfo.rec.top;

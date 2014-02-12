@@ -51,6 +51,9 @@
     <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SoundFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXFrame.cpp">
@@ -89,9 +92,15 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SoundFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="playtex.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="fmodex.dll">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

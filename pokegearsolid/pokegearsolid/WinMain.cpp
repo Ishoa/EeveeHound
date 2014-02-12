@@ -122,11 +122,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam)
 			{
 				// Escape Key will close the application
 				// Remove/Modify this call when creating a real game with menus, etc.
-				case VK_ESCAPE:
-				{
-				PostQuitMessage(0);
-				break;
-				}
+				//case VK_ESCAPE:
+				//{
+				//PostQuitMessage(0);
+				//break;
+				//}
 			}
 		}
 	}

@@ -27,6 +27,14 @@ Menu::Menu()
 
 void Menu::reset()
 {
+	int w,h;
+	//store curent res
+	h = height;
+	w = width;
+	//change res for ez placment
+	height = 600;
+	width = 800;
+	setRes(width,height);
 	for(int i = 0;i<numBut;i++)
 	{
 		buttons[i].setActive(true);
@@ -47,6 +55,8 @@ void Menu::reset()
 		buttons[i].setlable(L"Blank");
 		buttons[i].setVisAct(false);
 	}
+	//reset res
+	setRes(800,600);
 }
 
 
@@ -117,17 +127,17 @@ void Menu::Update(char keyboard[],DIMOUSESTATE2& mouse,bool &pushed)
 	{
 		x = 0;
 	}
-	else if(x>800)
+	else if(x>width)
 	{
-		x=800;
+		x=width;
 	}
 	if(y<0)
 	{
 		y = 0;
 	}
-	else if(y>600)
+	else if(y>height)
 	{
-		y = 600;
+		y = height;
 	}
 	cur.setPos(x,y);
 	if((keyboard[DIK_UP]&0x80))
@@ -180,6 +190,10 @@ void Menu::Update(char keyboard[],DIMOUSESTATE2& mouse,bool &pushed)
 			pushed = true;
 		}
 	}
+	else if(keyboard[DIK_RETURN]&0x80||mouse.rgbButtons[0]&0x80)
+	{
+		pushed = true;
+	}
 	else if(pushed)
 	{
 		pushed = false;
@@ -190,12 +204,17 @@ void Menu::Update(char keyboard[],DIMOUSESTATE2& mouse,bool &pushed)
 	}
 }
 
-void Menu::GetRender(renderInfo& mou,TextStruct tex[])
+void Menu::GetRender(renderInfo& mou,int& sprites,TextStruct tex[],int& text)
 {
 	mou = cur.getRend();
+	++sprites;
 	for(int i = 0;i<numBut;++i)
 	{
-		tex[i] = buttons[i].getTextInf();
+		if(buttons[i].getVisable())
+		{
+			tex[text] = buttons[i].getTextInf();
+			++text;
+		}
 	}
 }
 
@@ -211,6 +230,11 @@ void Menu::setRes(int w,int h)
 {
 	width = w;
 	height = h;
+	//update all the button locations
+	for(int i = 0;i<numBut;++i)
+	{
+		buttons[i].setRes(w,h);
+	}
 }
 
 void Menu::MoveMouseToBut(int but)

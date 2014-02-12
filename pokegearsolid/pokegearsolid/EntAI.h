@@ -27,8 +27,9 @@ private:
 	AINode* NextNode;
 public:
 	EntAI();
-	EntAI(Pos&,AINode&);
+	EntAI(Pos&,AINode&,void* map);
 	bool getRend(D3Object&);
 	bool setRend(D3Object&);
+	Pos getPos();
 	bool update(void*);
 };

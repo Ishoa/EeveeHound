@@ -7,12 +7,15 @@ PokeGear::PokeGear()
 	camera.cam_pos = D3DXVECTOR3(0,-1,-10);
 	camera.cam_look_pos = D3DXVECTOR3(0,0,0);
 	bCanInput = true;
+	menuPushed = false;
+	curState = MainMenu;
 }
 
 void PokeGear::init(HWND& hWnd, HINSTANCE& hInst, bool bWindowed)
 {
 	input.init(hWnd,hInst);
 	display.Init(hWnd,hInst,bWindowed);
+	soundSys.Init();
 	for(int i = 0;i<maxModels;++i)
 	{
 		Models[i].obj = 0;
@@ -55,30 +58,65 @@ void PokeGear::init(HWND& hWnd, HINSTANCE& hInst, bool bWindowed)
 	//end art load
 	sneak.init(Models[1],&materials[1],&materials[2],textures[0].objTex);
 	sneak.setPlayPos(curPlay,0,0);
+	menuSys.reset();
+	//set sprite tex
+	curSpri.tex = textures[0].objTex;
+	curSpri.texinfo = textures[0].texInfo;
+	menuSys.setMouseSprite(curSpri);
 }
+
+//soundSys.load("FileName",&sound); to load a sound
+//soundSys.loadStream("FileName",&sound); to load a sound to steam
+//soundSys.Play(sound); to play a sound
+//soundSys.PlayStream(sound,bMuted); to play or mute stream
 
 void PokeGear::update()
 {
 	Pos temp;
 	int numobjs = 0,numSprits = 0,numText = 0;
+	int tempInt;
 	input.Update(keyboard,mouse);
-	//movement demo
-	sneak.Update(keyboard,bCanInput,mouse,curPlay);
-	sneak.getRend(D3Objs,numobjs,Sprites,numSprits,Text,numText);
-	temp = curPlay.getRen();
-	
-	camera.cam_pos.x = temp.X;
-	camera.cam_pos.y = temp.Y;
-	camera.cam_look_pos.x =temp.X;
-	camera.cam_look_pos.y = temp.Y;
-	
-	D3DXMatrixTranslation(&Models[0].matrix,temp.X,temp.Y,temp.Z);
-	D3Objs[numobjs] = Models[0];
-	D3DXMatrixTranslation(&D3Objs[numobjs].matrix,temp.X,temp.Y,temp.Z);
-	++numobjs;
-	
-	//end movement demo
-	display.Render(camera,D3Objs,numobjs,Sprites,0,Text,0);
+	switch(curState)
+	{
+	case MainMenu:
+		menuSys.GetRender(Sprites[numSprits],numSprits,Text,numText);
+		if((mouse.rgbButtons[0]&0x80)||(keyboard[DIK_RETURN]&0x80))
+		{
+			if(menuSys.getPushed(tempInt,menuPushed))
+			{
+				switch(tempInt)
+				{
+				case 0:
+					curState = stealth;
+					break;
+				case 4:
+					PostQuitMessage(0);
+					break;
+				}
+			}
+		}
+		menuSys.Update(keyboard,mouse,menuPushed);
+		break;
+	case stealth:
+		//update and get render for map and ents
+		sneak.Update(keyboard,bCanInput,mouse,curPlay,&soundSys);
+		sneak.getRend(D3Objs,numobjs,Sprites,numSprits,Text,numText);
+		temp = curPlay.getRen();
+		//move cam
+		camera.cam_pos.x = temp.X;
+		camera.cam_pos.y = temp.Y;
+		camera.cam_look_pos.x =temp.X;
+		camera.cam_look_pos.y = temp.Y;
+		//add player to draw list
+		D3DXMatrixTranslation(&Models[0].matrix,temp.X,temp.Y,temp.Z);
+		D3Objs[numobjs] = Models[0];
+		D3DXMatrixTranslation(&D3Objs[numobjs].matrix,temp.X,temp.Y,temp.Z);
+		++numobjs;
+		//end stealth
+		break;
+	}
+	display.Render(camera,D3Objs,numobjs,Sprites,numSprits,Text,numText);
+	soundSys.update();
 }
 
 void PokeGear::shutdown()

@@ -41,14 +41,14 @@ void Stealth::init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wall
 	NodeList[0].nextNode = &NodeList[1];
 	NodeList[1].nextNode = &NodeList[0];
 
-	EntAI testAI(temp1,NodeList[0]);
+	EntAI testAI(temp1,NodeList[0],&CurMap);
 	floorbase.objMat = floormat;
 	floorbase.objTex = text;
 	testAI.setRend(floorbase);
 	AIList.push_back(testAI);
 }
 
-void Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,PlayerState& player)
+void Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,PlayerState& player,SoundFrame* soundSys)
 {
 	Pos playloc, playren;
 	bool hasMoved = false;
@@ -114,7 +114,14 @@ void Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,Player
 	{
 		for(int i = 0; i<listLength;++i)
 		{
-			AIList[i].update(&CurMap);
+			if(player.getPos().X == AIList[i].getPos().X&&player.getPos().Y == AIList[i].getPos().Y)
+			{
+				//kock out ai
+			}
+			else
+			{
+				AIList[i].update(&CurMap);
+			}
 		}
 	}
 

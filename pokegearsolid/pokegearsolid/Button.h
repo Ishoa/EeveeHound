@@ -10,6 +10,7 @@ class Button
 private:
 	bool highlight,active,visable;
 	TextStruct drawInfo;
+	int height,width;
 	DWORD defColor,higColor;
 public:
 	Button();
@@ -25,4 +26,5 @@ public:
 	void setVisable(bool);
 	bool getVisable();
 	void setVisAct(bool);
+	void setRes(int W,int H);
 };

@@ -8,6 +8,10 @@
 #define Texture IDirect3DTexture9*
 #define TexInfo D3DXIMAGE_INFO
 
+#include <fmod.hpp>
+#pragma comment(lib,"Fmodex_vc.lib")
+//sound for sound system
+#define Sound FMOD::Sound*
 
 struct D3Object
 {

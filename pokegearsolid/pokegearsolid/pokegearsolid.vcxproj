@@ -85,6 +85,7 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PokeGear.h" />
+    <ClInclude Include="SoundFrame.h" />
     <ClInclude Include="Stealth.h" />
   </ItemGroup>
   <ItemGroup>
@@ -98,10 +99,12 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PokeGear.cpp" />
+    <ClCompile Include="SoundFrame.cpp" />
     <ClCompile Include="Stealth.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="fmodex.dll" />
     <None Include="playtex.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

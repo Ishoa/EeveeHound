@@ -5,11 +5,23 @@ EntAI::EntAI():Entity(AI)
 	NextNode = 0;
 }
 
-EntAI::EntAI(Pos& pos,AINode& node):Entity(AI,pos)
+EntAI::EntAI(Pos& pos,AINode& node,void*in):Entity(AI,pos)
 {
+	D3DXMATRIX Rot,Trans;
+	D3DXMatrixIdentity(&Rot);
+	D3DXMatrixIdentity(&Trans);
+	Pos po;
+
 	curDirect = node.direction;
 	moveLeft = node.NumMoves;
 	NextNode = node.nextNode;
+	
+	Map* curmap = (Map*)in;
+	curmap->setNotEmpty(pos.X,pos.Y);
+
+	curmap->GetWorldPos(pos.X,pos.Y,po);
+	D3DXMatrixTranslation(&Trans,po.X,po.Y,zOffset);
+	rend.matrix = Trans;
 }
 
 bool EntAI::update(void* in)
@@ -22,6 +34,7 @@ bool EntAI::update(void* in)
 	y = loc.Y;
 	D3DXMatrixIdentity(&Rot);
 	D3DXMatrixIdentity(&Trans);
+	curmap->setEmpty(loc.X,loc.Y);
 	switch(curDirect)
 	{
 	case Up:
@@ -37,14 +50,11 @@ bool EntAI::update(void* in)
 		++x;
 		break;
 	}
-	if(curmap->valid(x,y))
+	if(curmap->valid(x,y)&&curmap->empt(x,y))
 	{
 		loc.X = x;
 		loc.Y = y;
 		--moveLeft;
-		curmap->GetWorldPos(x,y,po);
-		D3DXMatrixTranslation(&Trans,po.X,po.Y,zOffset);
-		rend.matrix = Trans;
 		if(moveLeft<=0)
 		{
 			if(NextNode != 0)
@@ -55,7 +65,16 @@ bool EntAI::update(void* in)
 			}
 		}
 	}
+	curmap->GetWorldPos(loc.X,loc.Y,po);
+	D3DXMatrixTranslation(&Trans,po.X,po.Y,zOffset);
+	rend.matrix = Trans;
+	curmap->setNotEmpty(loc.X,loc.Y);
 	return true;
+}
+
+Pos EntAI::getPos()
+{
+	return loc;
 }
 
 bool EntAI::getRend(D3Object& out)
