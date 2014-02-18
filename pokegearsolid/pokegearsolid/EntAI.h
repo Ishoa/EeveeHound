@@ -1,6 +1,6 @@
 #pragma once
 #include "EntBase.h"
-#define zOffset -0
+#define zOffset -1
 #include "Map.h"
 
 enum AIDirection

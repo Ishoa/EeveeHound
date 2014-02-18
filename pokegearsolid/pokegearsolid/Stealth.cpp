@@ -4,7 +4,7 @@ Stealth::Stealth()
 {
 }
 
-void Stealth::init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat,Texture text)
+void Stealth::init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat,Texture text, Texture enemyTex, D3Object& enemyModel, D3DMATERIAL9* enemyMat)
 {
 	Pos temp1,temp2;
 	CurMap.CreMap(20,20,floorbase,floormat,wallmat,text);
@@ -42,9 +42,9 @@ void Stealth::init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wall
 	NodeList[1].nextNode = &NodeList[0];
 
 	EntAI testAI(temp1,NodeList[0],&CurMap);
-	floorbase.objMat = floormat;
-	floorbase.objTex = text;
-	testAI.setRend(floorbase);
+	enemyModel.objMat = enemyMat;
+	enemyModel.objTex = enemyTex;
+	testAI.setRend(enemyModel);
 	AIList.push_back(testAI);
 }
 

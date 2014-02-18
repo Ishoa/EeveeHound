@@ -103,5 +103,8 @@
     <None Include="fmodex.dll">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="uvtest.png">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

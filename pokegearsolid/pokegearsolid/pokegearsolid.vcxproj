@@ -106,6 +106,7 @@
   <ItemGroup>
     <None Include="fmodex.dll" />
     <None Include="playtex.bmp" />
+    <None Include="uvtest.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
