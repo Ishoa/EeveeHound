@@ -1,6 +1,6 @@
 #pragma once
 #include "EntBase.h"
-#define zOffset -1
+#define zOffset -0.5f
 #include "Map.h"
 
 enum AIDirection
@@ -8,7 +8,11 @@ enum AIDirection
 	Up,
 	Down,
 	Left,
-	Right
+	Right,
+	WaitUp,
+	WaitDown,
+	WaitLeft,
+	WaitRight
 };
 
 struct AINode
@@ -30,6 +34,9 @@ public:
 	EntAI(Pos&,AINode&,void* map);
 	bool getRend(D3Object&);
 	bool setRend(D3Object&);
+	bool isStuned();
+	AIDirection curDirection();
+	void setStuned(int time);
 	Pos getPos();
 	bool update(void*);
 };

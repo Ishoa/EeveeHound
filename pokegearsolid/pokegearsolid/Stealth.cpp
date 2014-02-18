@@ -1,4 +1,6 @@
 #include "Stealth.h"
+#define stunTime 10
+#define viewLength 3
 
 Stealth::Stealth()
 {
@@ -31,11 +33,11 @@ void Stealth::init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wall
 	temp1.Y = 5;
 	AINode testNode;
 
-	testNode.direction = Up;
+	testNode.direction = Right;
 	testNode.NumMoves = 3;
 	NodeList.push_back(testNode);
 
-	testNode.direction = Down;
+	testNode.direction = Left;
 	NodeList.push_back(testNode);
 
 	NodeList[0].nextNode = &NodeList[1];
@@ -50,7 +52,7 @@ void Stealth::init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wall
 
 void Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,PlayerState& player,SoundFrame* soundSys)
 {
-	Pos playloc, playren;
+	Pos playloc, playren,sightCheck;
 	bool hasMoved = false;
 	playloc = player.getPos();
 	if(keyboard[DIK_UP]&0x80)
@@ -116,11 +118,45 @@ void Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,Player
 		{
 			if(player.getPos().X == AIList[i].getPos().X&&player.getPos().Y == AIList[i].getPos().Y)
 			{
-				//kock out ai
+				AIList[i].setStuned(stunTime);
 			}
 			else
 			{
 				AIList[i].update(&CurMap);
+			}
+		}
+		for(int i = 0;i<listLength;++i)
+		{
+			if(!AIList[i].isStuned())
+			{
+				sightCheck = AIList[i].getPos();
+				for(int v = 0;v<viewLength;++v)
+				{
+					switch(AIList[i].curDirection())
+					{
+					case Up:
+					case WaitUp:
+						sightCheck.Y+=1;
+						break;
+					case Down:
+					case WaitDown:
+						sightCheck.Y-=1;
+						break;
+					case Left:
+					case WaitLeft:
+						sightCheck.X-=1;
+						break;
+					case Right:
+					case WaitRight:
+						sightCheck.X+=1;
+						break;
+					}
+					if(sightCheck.X==playloc.X&&sightCheck.Y==playloc.Y)
+					{
+						AIList[i].setStuned(stunTime);
+						//start battle
+					}
+				}
 			}
 		}
 	}
