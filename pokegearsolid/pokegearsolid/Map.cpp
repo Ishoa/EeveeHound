@@ -216,6 +216,15 @@ Map& Map::operator=(const Map& temp)
 	return *this;
 }
 
+void Map::saveMap(std::ostream & file)
+{
+	file<<"S"<<XSize<<","<<YSize<<"\n";
+	for(int i = 0;i<walls.size();++i)
+	{
+		file<<"W"<<walls[i].loc.X<<","<<walls[i].loc.Y<<","<<walls[i].Size.X<<","<<walls[i].Size.Y<<"\n";
+	}
+}
+
 Map::~Map()
 {
 	cleanup();

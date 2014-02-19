@@ -195,6 +195,29 @@ void Stealth::shutdown()
 	CurMap.cleanup();
 }
 
+void Stealth::saveMap(const char* fileName)
+{
+	std::ofstream file;
+	file.open(fileName);
+	CurMap.saveMap(file);
+	for(int i = 0;i<AIList.size();++i)
+	{
+	}
+	for(int i = 0;i<NodeList.size();++i)
+	{
+	}
+}
+
+void Stealth::loadMap(const char* fileName)
+{
+	std::ifstream file;
+	file.open(fileName);
+	if(file.is_open())
+	{
+	}
+	file.close();
+}
+
 Stealth::~Stealth()
 {
 	shutdown();

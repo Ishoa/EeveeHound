@@ -18,6 +18,8 @@ public:
 	void Update(char[],bool&,DIMOUSESTATE2&,PlayerState& player,SoundFrame*);
 	bool setPlayPos(PlayerState&,int x,int y);
 	void getRend(D3Object[],int& NumObjs,renderInfo[],int& NumSprit,TextStruct[],int& NumText);
+	void saveMap(const char* fileName);
+	void loadMap(const char* fileName);
 	void shutdown();
 	~Stealth();
 };

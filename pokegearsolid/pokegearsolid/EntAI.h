@@ -20,13 +20,15 @@ struct AINode
 	AIDirection direction;
 	int NumMoves;
 	AINode* nextNode;
+	int nextNodeNum;
 };
 
 class EntAI : public Entity
 {
 private:
 	D3Object rend;
-	int moveLeft, stun;
+	int moveLeft, stun, startNode;
+	Pos startPos;
 	AIDirection curDirect;
 	AINode* NextNode;
 public:

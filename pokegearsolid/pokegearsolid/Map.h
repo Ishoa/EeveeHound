@@ -3,6 +3,7 @@
 #include "Defines.h"
 #include <vector>
 #include "EntBase.h"
+#include <fstream>
 
 struct grid
 {
@@ -38,6 +39,7 @@ public:
 	void setEmpty(int X,int Y);
 	void setNotEmpty(int X,int Y);
 	void cleanup();
+	void saveMap(std::ostream & file);
 	Map& operator=(const Map& temp);
 	~Map();
 };
