@@ -38,6 +38,15 @@ void SoundFrame::Init()
 		f_sys->setSpeakerMode(FMOD_SPEAKERMODE_STEREO);
 		f_sys->init(100,FMOD_INIT_NORMAL,0);
 	}
+
+	for(int i = 0;i<maxSounds;++i)
+	{
+		sounds[i]=0;
+	}
+	for(int i = 0;i<maxStreams;++i)
+	{
+		streams[i]=0;
+	}
 }
 
 void SoundFrame::Restart()
@@ -75,6 +84,20 @@ void SoundFrame::ShutDown()
 {
 	f_ver = 0;
 	numdrivers = 0;
+	for(int i = 0;i<maxSounds;++i)
+	{
+		if(sounds[i]!=0)
+		{
+			sounds[i]->release();
+		}
+	}
+	for(int i = 0;i<maxStreams;++i)
+	{
+		if(streams[i]!=0)
+		{
+			streams[i]->release();
+		}
+	}
 	if(f_sys != 0)
 	{
 		f_sys->release();
@@ -100,6 +123,36 @@ void SoundFrame::Play(Sound sound)
 void SoundFrame::PlayStream(Sound sound,bool mute)
 {
 	f_sys->playSound(FMOD_CHANNEL_FREE,sound,mute,0);
+}
+
+bool SoundFrame::load(const char* name,int num)
+{
+	if(num>=0&&num<maxSounds)
+	{
+		load(name,&sounds[num]);
+		return true;
+	}
+	return false;
+}
+
+bool SoundFrame::loadStream(const char* name, int num)
+{
+	if(num>=0&&num<maxStreams)
+	{
+		loadStream(name,&streams[num]);
+		return true;
+	}
+	return false;
+}
+
+void SoundFrame::Play(int num)
+{
+	Play(sounds[num]);
+}
+
+void SoundFrame::PlayStream(int num,bool mute)
+{
+	PlayStream(streams[num],mute);
 }
 
 void SoundFrame::update()

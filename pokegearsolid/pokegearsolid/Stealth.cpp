@@ -122,43 +122,42 @@ void Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,Player
 			}
 			else
 			{
+				if(!AIList[i].isStuned())
+				{
+					sightCheck = AIList[i].getPos();
+					for(int v = 0;v<viewLength;++v)
+					{
+						switch(AIList[i].curDirection())
+						{
+						case Up:
+						case WaitUp:
+							sightCheck.Y+=1;
+							break;
+						case Down:
+						case WaitDown:
+							sightCheck.Y-=1;
+							break;
+						case Left:
+						case WaitLeft:
+							sightCheck.X-=1;
+							break;
+						case Right:
+						case WaitRight:
+							sightCheck.X+=1;
+							break;
+						}
+						if(sightCheck.X==playloc.X&&sightCheck.Y==playloc.Y)
+						{
+							AIList[i].setStuned(stunTime);
+							//start battle
+							soundSys->Play(0);
+						}
+					}
+				}
 				AIList[i].update(&CurMap);
 			}
 		}
-		for(int i = 0;i<listLength;++i)
-		{
-			if(!AIList[i].isStuned())
-			{
-				sightCheck = AIList[i].getPos();
-				for(int v = 0;v<viewLength;++v)
-				{
-					switch(AIList[i].curDirection())
-					{
-					case Up:
-					case WaitUp:
-						sightCheck.Y+=1;
-						break;
-					case Down:
-					case WaitDown:
-						sightCheck.Y-=1;
-						break;
-					case Left:
-					case WaitLeft:
-						sightCheck.X-=1;
-						break;
-					case Right:
-					case WaitRight:
-						sightCheck.X+=1;
-						break;
-					}
-					if(sightCheck.X==playloc.X&&sightCheck.Y==playloc.Y)
-					{
-						AIList[i].setStuned(stunTime);
-						//start battle
-					}
-				}
-			}
-		}
+		
 	}
 
 }

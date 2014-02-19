@@ -13,6 +13,8 @@
 #define maxtext 100
 #define maxtexture 20
 #define maxModels 20
+#define maxMat 10
+
 
 enum gameState
 {
@@ -37,7 +39,7 @@ private:
 	renderInfo curSpri;
 	TextStruct Text[maxtext];
 	TextureStruc textures[maxtexture];
-	D3DMATERIAL9 materials[10];
+	D3DMATERIAL9 materials[maxMat];
 	PlayerState curPlay;
 	Stealth sneak;
 	Menu menuSys;

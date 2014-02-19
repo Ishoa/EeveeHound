@@ -79,6 +79,14 @@ void PokeGear::init(HWND& hWnd, HINSTANCE& hInst, bool bWindowed)
 	curSpri.tex = textures[0].objTex;
 	curSpri.texinfo = textures[0].texInfo;
 	menuSys.setMouseSprite(curSpri);
+
+	//load music
+	soundSys.loadStream("MGSMain.mp3",0);
+	soundSys.loadStream("MGSSneak.mp3",1);
+	//load sounds
+	soundSys.load("MGSAleartSound.wav",0);
+	//start menu music
+	soundSys.PlayStream(0,false);
 }
 
 //soundSys.load("FileName",&sound); to load a sound
@@ -104,6 +112,8 @@ void PokeGear::update()
 				{
 				case 0:
 					curState = stealth;
+					soundSys.PlayStream(0,true);
+					soundSys.PlayStream(1,false);
 					break;
 				case 4:
 					PostQuitMessage(0);
