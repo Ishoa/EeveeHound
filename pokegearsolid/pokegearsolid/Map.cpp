@@ -187,7 +187,7 @@ bool Map::display(D3Object world[],int &objs)
 	{
 		D3DXMatrixIdentity(&wallbase.matrix);
 		D3DXMatrixTranslation(&loc,walls[i].loc.X,walls[i].loc.Y,walls[i].loc.Z);
-		D3DXMatrixScaling(&scale,walls[i].Size.X,walls[i].Size.Y,-5);
+		D3DXMatrixScaling(&scale,walls[i].Size.X,walls[i].Size.Y,-3);
 		wallbase.matrix = scale*loc;
 		world[objs] = wallbase;
 		++objs;
