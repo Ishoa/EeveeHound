@@ -11,23 +11,26 @@ void Stealth::init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wall
 	Pos temp1,temp2;
 	CurMap.CreMap(20,20,floorbase,floormat,wallmat,text);
 	//CurMap=Map(20,20,floorbase,floormat,wallmat,text);
-	temp1.X=1;
-	temp1.Y=1;
-	temp2.X=1;
-	temp2.Y=5;
-	CurMap.addWall(temp1,temp2);
+	
+	loadMap("map.txt");
 
-	temp1.X=3;
-	temp1.Y=1;
-	temp2.X=3;
-	temp2.Y=5;
-	CurMap.addWall(temp1,temp2);
+	//temp1.X=1;
+	//temp1.Y=1;
+	//temp2.X=1;
+	//temp2.Y=5;
+	//CurMap.addWall(temp1,temp2);
 
-	temp1.X = 6;
-	temp1.Y = 5;
-	temp2.X = 4;
-	temp2.Y = 8;
-	CurMap.addWall(temp1,temp2);
+	//temp1.X=3;
+	//temp1.Y=1;
+	//temp2.X=3;
+	//temp2.Y=5;
+	//CurMap.addWall(temp1,temp2);
+
+	//temp1.X = 6;
+	//temp1.Y = 5;
+	//temp2.X = 4;
+	//temp2.Y = 8;
+	//CurMap.addWall(temp1,temp2);
 
 	temp1.X = 7;
 	temp1.Y = 5;
@@ -210,11 +213,25 @@ void Stealth::saveMap(const char* fileName)
 
 void Stealth::loadMap(const char* fileName)
 {
+	Pos temp1,temp2;
 	std::ifstream file;
 	file.open(fileName);
 	if(file.is_open())
 	{
+		int number;
+		file>>number;
+		file.ignore();
+		for (int i=0;i<number;i++)
+		{
+			file>>temp1.X;
+			file>>temp1.Y;
+			file>>temp2.X;
+			file>>temp2.Y;
+			file.ignore();
+			CurMap.addWall(temp1,temp2);
+		}
 	}
+	
 	file.close();
 }
 

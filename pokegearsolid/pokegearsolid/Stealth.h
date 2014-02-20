@@ -5,6 +5,7 @@
 #include <vector>
 #include "SoundFrame.h"
 
+//const char* map="map.txt";
 class Stealth
 {
 private:
