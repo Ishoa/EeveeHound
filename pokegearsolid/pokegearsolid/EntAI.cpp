@@ -5,12 +5,39 @@ EntAI::EntAI():Entity(AI)
 	NextNode = 0;
 }
 
-EntAI::EntAI(Pos& pos,AINode& node,void*in):Entity(AI,pos)
+EntAI::EntAI(Pos& pos,AINode& node,void*in,int nodeNum):Entity(AI,pos)
 {
 	D3DXMATRIX Rot,Trans;
 	D3DXMatrixIdentity(&Rot);
 	D3DXMatrixIdentity(&Trans);
 	Pos po;
+
+	startPos = pos;
+	startNode = nodeNum;
+
+	curDirect = node.direction;
+	moveLeft = node.NumMoves;
+	NextNode = node.nextNode;
+	
+	Map* curmap = (Map*)in;
+	curmap->setNotEmpty(pos.X,pos.Y);
+
+	curmap->GetWorldPos(pos.X,pos.Y,po);
+	D3DXMatrixTranslation(&Trans,po.X,po.Y,zOffset);
+	rend.matrix = Trans;
+}
+
+void EntAI::setAI(Pos& pos,AINode& node,void*in,int nodeNum)
+{
+	D3DXMATRIX Rot,Trans;
+	D3DXMatrixIdentity(&Rot);
+	D3DXMatrixIdentity(&Trans);
+	Pos po;
+
+	loc = pos;
+
+	startPos = pos;
+	startNode = nodeNum;
 
 	curDirect = node.direction;
 	moveLeft = node.NumMoves;
@@ -118,6 +145,16 @@ bool EntAI::isStuned()
 Pos EntAI::getPos()
 {
 	return loc;
+}
+
+Pos EntAI::getStartPos()
+{
+	return startPos;
+}
+
+int EntAI::getStartNode()
+{
+	return startNode;
 }
 
 AIDirection EntAI::curDirection()

@@ -1,0 +1,67 @@
+//x Size
+20
+//y Size
+20
+//number of walls
+39
+//list of walls in pos1.x pos1.y pos2.x pos2.y format
+1 1 8 1
+1 3 1 8
+2 2 2 2
+2 9 2 9
+4 9 4 9
+6 9 6 9
+6 8 6 8
+6 7 6 7
+6 6 6 6
+7 6 7 6
+8 6 8 6
+10 2 10 2
+10 1 10 1
+10 0 10 0
+1 19 19 19
+1 16 1 16
+1 15 1 15
+1 14 1 14
+2 13 2 13
+3 13 3 13
+4 13 4 13
+5 13 5 13
+7 18 7 18
+7 17 7 17
+7 16 7 16
+7 15 7 15
+19 0 19 18
+11 3 11 3
+11 4 11 4
+11 5 11 5
+11 6 11 6
+11 11 11 11
+11 12 11 12
+11 13 11 13
+11 14 11 14
+11 15 11 15
+10 15 10 15
+9 15 9 15
+12 15 12 18
+//number of AINodes
+2
+//nodes in direction numberOfMoves nextNodeNum format
+//nodes index from 0
+/*
+Direction numbers key:
+0 = Up
+1 = Down
+2 = Left
+3 = Right
+4 = WaitUp
+5 = WaitDown
+6 = WaitLeft
+7 = WaitRight
+*/
+3 3 1
+2 3 0
+//number of AI
+1
+//AI List in as startX startY firstNodeNum format
+7 5 0

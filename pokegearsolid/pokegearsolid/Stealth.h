@@ -16,11 +16,11 @@ private:
 public:
 	Stealth();
 	void init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat,Texture gentext, Texture enemyTex, D3Object& enemyModel, D3DMATERIAL9* enemyMat);
-	void Update(char[],bool&,DIMOUSESTATE2&,PlayerState& player,SoundFrame*);
+	int Update(char[],bool&,DIMOUSESTATE2&,PlayerState& player,SoundFrame*);
 	bool setPlayPos(PlayerState&,int x,int y);
 	void getRend(D3Object[],int& NumObjs,renderInfo[],int& NumSprit,TextStruct[],int& NumText);
 	void saveMap(const char* fileName);
-	void loadMap(const char* fileName);
+	void loadMap(const char* fileName,Texture enemyTex, D3Object& enemyModel, D3DMATERIAL9* enemyMat);
 	void shutdown();
 	~Stealth();
 };

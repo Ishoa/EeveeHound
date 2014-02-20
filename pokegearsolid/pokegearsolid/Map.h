@@ -17,6 +17,8 @@ struct wall
 {
 	Pos Size;
 	Pos loc;
+	Pos p1;
+	Pos p2;
 };
 
 class Map
@@ -36,6 +38,7 @@ public:
 	bool CreMap(int x,int y,D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat,Texture);
 	bool GetWorldPos(int x,int y,Pos&);
 	bool getCost(int x,int y,int& cost);
+	void resizeMap(int x,int y);
 	void setEmpty(int X,int Y);
 	void setNotEmpty(int X,int Y);
 	void cleanup();

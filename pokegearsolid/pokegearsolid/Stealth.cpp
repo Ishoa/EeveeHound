@@ -6,14 +6,20 @@ Stealth::Stealth()
 {
 }
 
+void linkNodes(AINode* node1,AINode* node2)
+{
+	node1->nextNode = node2;
+	node1->nextNodeNum = node2->nodeNum;
+}
+
 void Stealth::init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wallmat,Texture text, Texture enemyTex, D3Object& enemyModel, D3DMATERIAL9* enemyMat)
 {
-	Pos temp1,temp2;
+	//Pos temp1,temp2;
 	CurMap.CreMap(20,20,floorbase,floormat,wallmat,text);
 	//CurMap=Map(20,20,floorbase,floormat,wallmat,text);
 	
-	loadMap("map.txt");
-
+	loadMap("AITest.txt",enemyTex,enemyModel,enemyMat);
+	
 	//temp1.X=1;
 	//temp1.Y=1;
 	//temp2.X=1;
@@ -31,29 +37,35 @@ void Stealth::init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wall
 	//temp2.X = 4;
 	//temp2.Y = 8;
 	//CurMap.addWall(temp1,temp2);
-
+	/*
 	temp1.X = 7;
 	temp1.Y = 5;
 	AINode testNode;
-
+	int numNodes = 0;
 	testNode.direction = Right;
 	testNode.NumMoves = 3;
+	testNode.nodeNum = NodeList.size();
 	NodeList.push_back(testNode);
 
 	testNode.direction = Left;
+	testNode.nodeNum = NodeList.size();
 	NodeList.push_back(testNode);
 
-	NodeList[0].nextNode = &NodeList[1];
-	NodeList[1].nextNode = &NodeList[0];
+	linkNodes(&NodeList[NodeList.size()-2],&NodeList[NodeList.size()-1]);
+	
+	linkNodes(&NodeList[NodeList.size()-1],&NodeList[NodeList.size()-2]);
 
-	EntAI testAI(temp1,NodeList[0],&CurMap);
+	EntAI testAI(temp1,NodeList[NodeList.size()-2],&CurMap,NodeList.size()-2);
+
 	enemyModel.objMat = enemyMat;
 	enemyModel.objTex = enemyTex;
 	testAI.setRend(enemyModel);
-	AIList.push_back(testAI);
+	AIList.push_back(testAI);*/
+
+	//saveMap("map.txt");
 }
 
-void Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,PlayerState& player,SoundFrame* soundSys)
+int Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,PlayerState& player,SoundFrame* soundSys)
 {
 	Pos playloc, playren,sightCheck;
 	bool hasMoved = false;
@@ -149,11 +161,18 @@ void Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,Player
 							sightCheck.X+=1;
 							break;
 						}
-						if(sightCheck.X==playloc.X&&sightCheck.Y==playloc.Y)
+						if(CurMap.valid(sightCheck.X,sightCheck.Y))
 						{
-							AIList[i].setStuned(stunTime);
-							//start battle
-							soundSys->Play(0);
+							if(sightCheck.X==playloc.X&&sightCheck.Y==playloc.Y)
+							{
+								AIList[i].setStuned(stunTime);
+								//start battle
+								soundSys->Play(0);
+							}
+						}
+						else
+						{
+							v = viewLength;
 						}
 					}
 				}
@@ -162,7 +181,7 @@ void Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,Player
 		}
 		
 	}
-
+	return 0;
 }
 
 bool Stealth::setPlayPos(PlayerState& player,int x,int y)
@@ -200,28 +219,52 @@ void Stealth::shutdown()
 
 void Stealth::saveMap(const char* fileName)
 {
+	int x,y;
+	Pos temp;
 	std::ofstream file;
 	file.open(fileName);
+	//call map save to get size and walls
 	CurMap.saveMap(file);
-	for(int i = 0;i<AIList.size();++i)
-	{
-	}
+	//number of nodes
+	file<<NodeList.size()<<"\n";
+	//save nodes
 	for(int i = 0;i<NodeList.size();++i)
 	{
+		file<<NodeList[i].direction<<" "<<NodeList[i].NumMoves<<" "<<NodeList[i].nextNodeNum<<"\n";
+	}
+	//number of AIs
+	file<<AIList.size()<<"\n";
+	//save AI
+	for(int i = 0;i<AIList.size();++i)
+	{
+		temp = AIList[i].getStartPos();
+		file<<temp.X<<" "<<temp.Y<<" "<<AIList[i].getStartNode()<<"\n";
 	}
 }
 
-void Stealth::loadMap(const char* fileName)
+void Stealth::loadMap(const char* fileName, Texture enemyTex, D3Object& enemyModel, D3DMATERIAL9* enemyMat)
 {
 	Pos temp1,temp2;
+	int tempInt;
+	AINode tempNode;
+	EntAI tempAI;
 	std::ifstream file;
 	file.open(fileName);
 	if(file.is_open())
 	{
-		int number;
-		file>>number;
+		int numWalls,xSize,ySize,numAI,numAINode;
+		//get map size
+		file>>xSize;
 		file.ignore();
-		for (int i=0;i<number;i++)
+		file>>ySize;
+		file.ignore();
+		//clear map and set its size
+		CurMap.resizeMap(xSize,ySize);
+		//get number of walls
+		file>>numWalls;
+		file.ignore();
+		//add walls
+		for (int i=0;i<numWalls;i++)
 		{
 			file>>temp1.X;
 			file>>temp1.Y;
@@ -229,6 +272,67 @@ void Stealth::loadMap(const char* fileName)
 			file>>temp2.Y;
 			file.ignore();
 			CurMap.addWall(temp1,temp2);
+		}
+		//get number of nodes
+		file>>numAINode;
+		file.ignore();
+		//add nodes
+		for(int i = 0;i<numAINode;++i)
+		{
+			file>>tempInt;
+			switch(tempInt)
+			{
+			case 0:
+				tempNode.direction = Up;
+				break;
+			case 1:
+				tempNode.direction = Down;
+				break;
+			case 2:
+				tempNode.direction = Left;
+				break;
+			case 3:
+				tempNode.direction = Right;
+				break;
+			case 4:
+				tempNode.direction = WaitUp;
+				break;
+			case 5:
+				tempNode.direction = WaitDown;
+				break;
+			case 6:
+				tempNode.direction = WaitLeft;
+				break;
+			case 7:
+				tempNode.direction = WaitRight;
+				break;
+			}
+			file>>tempNode.NumMoves;
+			file>>tempNode.nextNodeNum;
+			file.ignore();
+			tempNode.nodeNum = i;
+			NodeList.push_back(tempNode);
+		}
+		//link nodes
+		for(int i = 0;i<numAINode;++i)
+		{
+			linkNodes(&NodeList[i],&NodeList[NodeList[i].nextNodeNum]);
+		}
+		//get number of AIs
+		file>>numAI;
+		file.ignore();
+		//add AIs
+		enemyModel.objTex = enemyTex;
+		enemyModel.objMat = enemyMat;
+		tempAI.setRend(enemyModel);
+		for(int i = 0;i<numAI;++i)
+		{
+			file>>temp1.X;
+			file>>temp1.Y;
+			file>>tempInt;
+			file.ignore();
+			tempAI.setAI(temp1,NodeList[tempInt],&CurMap,tempInt);
+			AIList.push_back(tempAI);
 		}
 	}
 	

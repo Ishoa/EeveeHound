@@ -125,7 +125,7 @@ void PokeGear::update()
 		break;
 	case stealth:
 		//update and get render for map and ents
-		sneak.Update(keyboard,bCanInput,mouse,curPlay,&soundSys);
+		tempInt = sneak.Update(keyboard,bCanInput,mouse,curPlay,&soundSys);
 		sneak.getRend(D3Objs,numobjs,Sprites,numSprits,Text,numText);
 		temp = curPlay.getRen();
 		//move cam

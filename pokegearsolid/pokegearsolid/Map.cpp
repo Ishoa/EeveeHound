@@ -86,6 +86,27 @@ bool Map::CreMap(int X,int Y,D3Object& base,D3DMATERIAL9* floormat,D3DMATERIAL9*
 	return true;
 }
 
+void Map::resizeMap(int x,int y)
+{
+	cleanup();
+	world = new grid*[x];
+	for(int i = 0;i<x;++i)
+	{
+		world[i] = new grid[y];
+		for(int f = 0;f<y;++f)
+		{
+			world[i][f].worldPos.X = i*gridsize+gridoffset;
+			world[i][f].worldPos.Y = f*gridsize+gridoffset;
+			world[i][f].worldPos.Z = 0;
+			world[i][f].ground = true;
+			world[i][f].empty = true;
+			world[i][f].cost = 1;
+		}
+	}
+	XSize = x;
+	YSize = y;
+}
+
 bool Map::GetWorldPos(int x,int y,Pos& worldp)
 {
 	if(x>=0&&x<XSize&&y>=0&&y<YSize)
@@ -131,6 +152,8 @@ bool Map::addWall(Pos pos1,Pos pos2)
 {
 	int XStart, XEnd, YStart,YEnd;
 	wall temp;
+	temp.p1 = pos1;
+	temp.p2 = pos2;
 	if(pos1.X >= 0&&pos2.X >= 0&&pos1.Y<YSize&&pos2.Y<YSize)
 	{
 		//set x range
@@ -218,10 +241,12 @@ Map& Map::operator=(const Map& temp)
 
 void Map::saveMap(std::ostream & file)
 {
-	file<<"S"<<XSize<<","<<YSize<<"\n";
+	file<<XSize<<"\n";
+	file<<YSize<<"\n";
+	file<<walls.size()<<"\n";
 	for(int i = 0;i<walls.size();++i)
 	{
-		file<<"W"<<walls[i].loc.X<<","<<walls[i].loc.Y<<","<<walls[i].Size.X<<","<<walls[i].Size.Y<<"\n";
+		file<<walls[i].p1.X<<" "<<walls[i].p1.Y<<" "<<walls[i].p2.X<<" "<<walls[i].p2.Y<<"\n";
 	}
 }
 
