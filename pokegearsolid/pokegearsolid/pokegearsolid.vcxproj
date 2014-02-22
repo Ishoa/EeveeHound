@@ -81,6 +81,8 @@
     <ClInclude Include="dxinput.h" />
     <ClInclude Include="EntAI.h" />
     <ClInclude Include="EntBase.h" />
+    <ClInclude Include="EntLoadTrigger.h" />
+    <ClInclude Include="EntStoryTrigger.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="PlayerState.h" />
@@ -95,6 +97,8 @@
     <ClCompile Include="dxinput.cpp" />
     <ClCompile Include="EntAI.cpp" />
     <ClCompile Include="EntBase.cpp" />
+    <ClCompile Include="EntLoadTrigger.cpp" />
+    <ClCompile Include="EntStoryTrigger.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="PlayerState.cpp" />

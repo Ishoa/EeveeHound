@@ -17,8 +17,8 @@ void Stealth::init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wall
 	//Pos temp1,temp2;
 	CurMap.CreMap(20,20,floorbase,floormat,wallmat,text);
 	//CurMap=Map(20,20,floorbase,floormat,wallmat,text);
-	
-	loadMap("AITest.txt",enemyTex,enemyModel,enemyMat);
+
+	loadMap("map.txt",enemyTex,enemyModel,enemyMat);
 	
 	//temp1.X=1;
 	//temp1.Y=1;
@@ -61,14 +61,29 @@ void Stealth::init(D3Object& floorbase,D3DMATERIAL9* floormat,D3DMATERIAL9* wall
 	enemyModel.objTex = enemyTex;
 	testAI.setRend(enemyModel);
 	AIList.push_back(testAI);*/
+	
+	/*
+	EntLoadTrigger tempLoad;
+	Pos tempPos;
+	tempPos.X = 1;
+	tempPos.Y = 0;
+	tempPos.Z = 0;
+	tempLoad.setLoc(tempPos);
+	tempPos.X = 0;
+	tempLoad.setPlayLoc(tempPos);
+	tempLoad.setMap("map.txt");
+	LoadList.push_back(tempLoad);
+	*/
 
-	//saveMap("map.txt");
+	//saveMap("savetest.txt");
 }
 
 int Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,PlayerState& player,SoundFrame* soundSys)
 {
 	Pos playloc, playren,sightCheck;
+	int listLength;
 	bool hasMoved = false;
+	std::string tempString;
 	playloc = player.getPos();
 	if(keyboard[DIK_UP]&0x80)
 	{
@@ -126,9 +141,21 @@ int Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,PlayerS
 	{
 		takeinput = true;
 	}
-	int listLength = AIList.size();
+	
 	if(hasMoved)
 	{
+		listLength = LoadList.size();
+		PlayerPos = player.getPos();
+		for(int i = 0;i<listLength;++i)
+		{
+			if(LoadList[i].update(tempString,PlayerPos))
+			{
+				loadMap(tempString);
+				setPlayPos(player,PlayerPos.X,PlayerPos.Y);
+				return 0;
+			}
+		}
+		listLength = AIList.size();
 		for(int i = 0; i<listLength;++i)
 		{
 			if(player.getPos().X == AIList[i].getPos().X&&player.getPos().Y == AIList[i].getPos().Y)
@@ -222,6 +249,7 @@ void Stealth::saveMap(const char* fileName)
 	int x,y;
 	Pos temp;
 	std::ofstream file;
+	std::string tempString;
 	file.open(fileName);
 	//call map save to get size and walls
 	CurMap.saveMap(file);
@@ -240,19 +268,49 @@ void Stealth::saveMap(const char* fileName)
 		temp = AIList[i].getStartPos();
 		file<<temp.X<<" "<<temp.Y<<" "<<AIList[i].getStartNode()<<"\n";
 	}
+	//number of loads
+	file<<LoadList.size()<<"\n";
+	for(int i = 0;i<LoadList.size();++i)
+	{
+		temp = LoadList[i].getLoc();
+		x = temp.X;
+		y = temp.Y;
+		temp = LoadList[i].getPlay();
+		file<<LoadList[i].getMapName()<<" "<<x<<" "<<y<<" "<<temp.X<<" "<<temp.Y<<"\n";
+	}
 }
 
-void Stealth::loadMap(const char* fileName, Texture enemyTex, D3Object& enemyModel, D3DMATERIAL9* enemyMat)
+void Stealth::clearVectors()
 {
+	AIList.clear();
+	NodeList.clear();
+	LoadList.clear();
+}
+
+Pos Stealth::getPlayPos()
+{
+	return PlayerPos;
+}
+
+void Stealth::loadMap(std::string fileName)
+{
+	loadMap(fileName,baseEnemy.objTex,baseEnemy,baseEnemy.objMat);
+}
+
+void Stealth::loadMap(std::string fileName, Texture enemyTex, D3Object& enemyModel, D3DMATERIAL9* enemyMat)
+{
+	clearVectors();
 	Pos temp1,temp2;
+	std::string tempString;
 	int tempInt;
+	int numWalls,xSize,ySize,numAI,numAINode,numLoads;
 	AINode tempNode;
 	EntAI tempAI;
+	EntLoadTrigger tempLoad;
 	std::ifstream file;
 	file.open(fileName);
 	if(file.is_open())
 	{
-		int numWalls,xSize,ySize,numAI,numAINode;
 		//get map size
 		file>>xSize;
 		file.ignore();
@@ -325,6 +383,7 @@ void Stealth::loadMap(const char* fileName, Texture enemyTex, D3Object& enemyMod
 		enemyModel.objTex = enemyTex;
 		enemyModel.objMat = enemyMat;
 		tempAI.setRend(enemyModel);
+		baseEnemy = enemyModel;
 		for(int i = 0;i<numAI;++i)
 		{
 			file>>temp1.X;
@@ -333,6 +392,23 @@ void Stealth::loadMap(const char* fileName, Texture enemyTex, D3Object& enemyMod
 			file.ignore();
 			tempAI.setAI(temp1,NodeList[tempInt],&CurMap,tempInt);
 			AIList.push_back(tempAI);
+		}
+		//get number of load points
+		file>>numLoads;
+		file.ignore();
+		//add load points
+		for(int i = 0;i<numLoads;++i)
+		{
+			std::getline(file,tempString,' ');
+			file>>temp1.X;
+			file>>temp1.Y;
+			file>>temp2.X;
+			file>>temp2.Y;
+			file.ignore();
+			tempLoad.setLoc(temp1);
+			tempLoad.setPlayLoc(temp2);
+			tempLoad.setMap(tempString);
+			LoadList.push_back(tempLoad);
 		}
 	}
 	

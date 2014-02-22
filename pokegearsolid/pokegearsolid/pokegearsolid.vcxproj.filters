@@ -54,6 +54,12 @@
     <ClInclude Include="SoundFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EntLoadTrigger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntStoryTrigger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXFrame.cpp">
@@ -93,6 +99,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SoundFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntStoryTrigger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntLoadTrigger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
