@@ -11,5 +11,7 @@ public:
 	EntStoryTrigger();
 	void setStoryNum(int);
 	void setLoc(Pos);
-	int update(PlayerState*);
+	int getStoryNum();
+	Pos getLoc();
+	bool update(PlayerState*);
 };

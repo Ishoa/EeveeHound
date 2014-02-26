@@ -27,10 +27,12 @@ public:
 	void initPikachu();
 	void resolveMoveInOrder(bool);
 	void setPlayerMove(int);
+	void setWatched(int);
 	int getPlayerMove();
 	void setEnemyMove(int);
 	int getEnemyMove();
 	void setPos(int locx,int locy,int renx,int reny);
 	bool setSceen(bool[],int arraySize);
+	bool sceenNew(int);
 	LPCWSTR getMap();
 };

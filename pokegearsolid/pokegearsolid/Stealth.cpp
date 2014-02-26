@@ -207,6 +207,13 @@ int Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,PlayerS
 				AIList[i].update(&CurMap);
 			}
 		}
+		for(int i = 0;i<StoryList.size();++i)
+		{
+			if(StoryList[i].update(&player))
+			{
+				return 2;
+			}
+		}
 		
 	}
 	return 0;
@@ -279,6 +286,14 @@ void Stealth::saveMap(const char* fileName)
 		temp = LoadList[i].getPlay();
 		file<<LoadList[i].getMapName()<<" "<<x<<" "<<y<<" "<<temp.X<<" "<<temp.Y<<"\n";
 	}
+	//number of story points
+	file<<StoryList.size()<<"\n";
+	for(int i = 0;i<StoryList.size();++i)
+	{
+		temp = StoryList[i].getLoc();
+		x = StoryList[i].getStoryNum();
+		file<<temp.X<<" "<<temp.Y<<" "<<x<<"\n";
+	}
 }
 
 void Stealth::clearVectors()
@@ -304,10 +319,11 @@ void Stealth::loadMap(std::string fileName, Texture enemyTex, D3Object& enemyMod
 	Pos temp1,temp2;
 	std::string tempString;
 	int tempInt;
-	int numWalls,xSize,ySize,numAI,numAINode,numLoads;
+	int numWalls,xSize,ySize,numAI,numAINode,numLoads,numStory;
 	AINode tempNode;
 	EntAI tempAI;
 	EntLoadTrigger tempLoad;
+	EntStoryTrigger tempTrigger;
 	std::ifstream file;
 	file.open(fileName);
 	if(file.is_open())
@@ -410,6 +426,20 @@ void Stealth::loadMap(std::string fileName, Texture enemyTex, D3Object& enemyMod
 			tempLoad.setPlayLoc(temp2);
 			tempLoad.setMap(tempString);
 			LoadList.push_back(tempLoad);
+		}
+		//get number of story triggers
+		file>>numStory;
+		file.ignore();
+		//add story triggers
+		for(int i = 0;i<numStory;++i)
+		{
+			file>>temp1.X;
+			file>>temp1.Y;
+			file>>tempInt;
+			file.ignore();
+			tempTrigger.setLoc(temp1);
+			tempTrigger.setStoryNum(tempInt);
+			StoryList.push_back(tempTrigger);
 		}
 	}
 	

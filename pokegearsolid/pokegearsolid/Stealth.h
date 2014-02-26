@@ -5,6 +5,7 @@
 #include <vector>
 #include "SoundFrame.h"
 #include "EntLoadTrigger.h"
+#include "EntStoryTrigger.h"
 #include <string>
 
 //const char* map="map.txt";
@@ -17,6 +18,7 @@ private:
 	std::vector<EntAI> AIList;
 	std::vector<AINode> NodeList;
 	std::vector<EntLoadTrigger> LoadList;
+	std::vector<EntStoryTrigger> StoryList;
 public:
 	Stealth();
 	Pos getPlayPos();

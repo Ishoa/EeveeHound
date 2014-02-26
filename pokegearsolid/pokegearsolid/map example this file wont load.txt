@@ -72,3 +72,7 @@ Direction numbers key:
 1
 //load triggers list in mapname loadx loady playerx playery format
 map.txt 18 0 0 0
+//number of story triggers
+1
+//story triggers list in x y sceenNum format
+1 0 0

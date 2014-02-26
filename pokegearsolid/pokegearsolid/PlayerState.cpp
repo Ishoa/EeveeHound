@@ -236,3 +236,17 @@ void resolveMove(Pokemon& a_user, Pokemon& a_enemy, int a_move) {
 	}
 		
 };
+
+bool PlayerState::sceenNew(int num)
+{
+	if(num<watchedDialogs.size())
+	{
+		return !watchedDialogs[num];
+	}
+	return false;
+}
+
+void PlayerState::setWatched(int num)
+{
+	watchedDialogs[num] = true;
+}
