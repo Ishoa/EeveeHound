@@ -16,6 +16,7 @@ PokeGear::PokeGear()
 	curBattleState = MAIN;
 	bCanInput2 = true;
 	newscene=true;
+	musicMute = false;
 }
 
 void PokeGear::init(HWND& hWnd, HINSTANCE& hInst, bool bWindowed)
@@ -88,6 +89,14 @@ void PokeGear::init(HWND& hWnd, HINSTANCE& hInst, bool bWindowed)
 	display.LoadTex(L"evilchu.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_XRGB(0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
 	++tex;
 
+	//load more stuff
+	display.LoadTex(L"Pokegearsolid.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_XRGB(0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
+	++tex;
+	display.LoadTex(L"deathbyekans.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_XRGB(0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
+	++tex;
+	display.LoadTex(L"win.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_XRGB(0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
+	++tex;
+
 	//world Model base
 	display.CreateUncenteredCube(Models[1],1,1,1);
 	//create enemy model
@@ -132,10 +141,11 @@ void PokeGear::init(HWND& hWnd, HINSTANCE& hInst, bool bWindowed)
 	//load music
 	soundSys.loadStream("MGSMain.mp3",0);
 	soundSys.loadStream("MGSSneak.mp3",1);
+	soundSys.loadStream("battle.mp3",2);
 	//load sounds
 	soundSys.load("MGSAleartSound.wav",0);
 	//start menu music
-	soundSys.PlayStream(0,false);
+	soundSys.PlayStream(0,musicMute);
 }
 
 //soundSys.load("FileName",&sound); to load a sound
@@ -149,10 +159,15 @@ void PokeGear::update()
 	int numobjs = 0,numSprits = 0,numText = 0;
 	int tempInt;
 	input.Update(keyboard,mouse);
+	renderInfo tempRend;
 	switch(curState)
 	{
 	case MainMenu:
 		menuSys.GetRender(Sprites[numSprits],numSprits,Text,numText);
+		tempRend.tex = textures[13].objTex;
+		D3DXMatrixIdentity(&tempRend.matrix);
+		Sprites[numSprits] = tempRend;
+		++numSprits;
 		if((mouse.rgbButtons[0]&0x80)||(keyboard[DIK_RETURN]&0x80))
 		{
 			if(menuSys.getPushed(tempInt,menuPushed))
@@ -162,7 +177,7 @@ void PokeGear::update()
 				case 0:
 					curState = story;
 					soundSys.PlayStream(0,true);
-					soundSys.PlayStream(1,false);
+					soundSys.PlayStream(1,musicMute);
 					break;
 				case 4:
 					PostQuitMessage(0);
@@ -194,10 +209,16 @@ void PokeGear::update()
 		case 1:
 			curState = battle;
 			curBattleState = BATTLESTART;
+			soundSys.PlayStream(1,true);
+			soundSys.PlayStream(2,musicMute);
 			break;
 		case 2:
 			newscene = true;
 			curState = story;
+			break;
+		case 3:
+			curState = victory;
+			menuSys.setQuitMenu();
 			break;
 		}
 		//end stealth
@@ -312,6 +333,8 @@ void PokeGear::update()
 			else if(display.getWaitTime() >= 4 && battleover) {
 				curBattleState = BATTLESTART;
 				curState = stealth;
+				soundSys.PlayStream(2,true);
+				soundSys.PlayStream(1,musicMute);
 				donePlayerAttack = false;
 				doneEnemyAttack = false;
 				battleover = false;
@@ -323,6 +346,9 @@ void PokeGear::update()
 				playerlost = true;
 				curBattleState = BATTLESTART;
 				curState = GameOver;
+				soundSys.PlayStream(2,true);
+				soundSys.PlayStream(1,musicMute);
+				menuSys.setQuitMenu();
 				curPlay.initPikachu();
 				donePlayerAttack = false;
 				doneEnemyAttack = false;
@@ -362,7 +388,45 @@ void PokeGear::update()
 		battler.Update(keyboard,mouse,menuPushed);
 		break;
 	case GameOver:
-		curState = MainMenu;
+		menuSys.GetRender(Sprites[numSprits],numSprits,Text,numText);
+		tempRend.tex = textures[14].objTex;
+		D3DXMatrixIdentity(&tempRend.matrix);
+		Sprites[numSprits] = tempRend;
+		++numSprits;
+		if((mouse.rgbButtons[0]&0x80)||(keyboard[DIK_RETURN]&0x80))
+		{
+			if(menuSys.getPushed(tempInt,menuPushed))
+			{
+				switch(tempInt)
+				{
+				case 0:
+					PostQuitMessage(0);
+					break;
+				}
+			}
+		}
+		menuSys.Update(keyboard,mouse,menuPushed);
+		break;
+	case victory:
+		menuSys.GetRender(Sprites[numSprits],numSprits,Text,numText);
+		tempRend.tex = textures[15].objTex;
+		D3DXMatrixIdentity(&tempRend.matrix);
+		Sprites[numSprits] = tempRend;
+		++numSprits;
+		if((mouse.rgbButtons[0]&0x80)||(keyboard[DIK_RETURN]&0x80))
+		{
+			if(menuSys.getPushed(tempInt,menuPushed))
+			{
+				switch(tempInt)
+				{
+				case 0:
+					PostQuitMessage(0);
+					break;
+				}
+			}
+		}
+		menuSys.Update(keyboard,mouse,menuPushed);
+		break;
 		break;
 	}
 	display.Render(camera,D3Objs,numobjs,Sprites,numSprits,Text,numText);

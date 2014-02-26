@@ -105,6 +105,7 @@ void Map::resizeMap(int x,int y)
 	}
 	XSize = x;
 	YSize = y;
+	D3DXMatrixScaling(&floor.matrix,XSize*gridsize,YSize*gridsize,1);
 }
 
 bool Map::GetWorldPos(int x,int y,Pos& worldp)

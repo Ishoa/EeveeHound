@@ -24,7 +24,8 @@ enum gameState
 	stealth,
 	story,
 	battle,
-	GameOver
+	GameOver,
+	victory
 };
 
 enum battleState {
@@ -62,6 +63,7 @@ private:
 	bool menuPushed;
 	char scenenumber;
 	bool newscene;
+	bool musicMute;
 	Battle battler;
 	bool donePlayerAttack;
 	bool doneEnemyAttack;

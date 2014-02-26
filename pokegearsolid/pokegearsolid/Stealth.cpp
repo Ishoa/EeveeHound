@@ -150,9 +150,16 @@ int Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,PlayerS
 		{
 			if(LoadList[i].update(tempString,PlayerPos))
 			{
-				loadMap(tempString);
-				setPlayPos(player,PlayerPos.X,PlayerPos.Y);
-				return 0;
+				if(tempString == "win")
+				{
+					return 3;
+				}
+				else
+				{
+					loadMap(tempString);
+					setPlayPos(player,PlayerPos.X,PlayerPos.Y);
+					return 0;
+				}
 			}
 		}
 		listLength = AIList.size();
@@ -209,7 +216,7 @@ int Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,PlayerS
 		}
 		for(int i = 0;i<StoryList.size();++i)
 		{
-			if(StoryList[i].update(&player))
+			if(StoryList[i].update(&player,PlayerPos))
 			{
 				return 2;
 			}

@@ -17,12 +17,15 @@ void EntStoryTrigger::setLoc(Pos po)
 	loc.Y = po.Y;
 }
 
-bool EntStoryTrigger::update(PlayerState* play)
+bool EntStoryTrigger::update(PlayerState* play,Pos playLoc)
 {
-	if(play->sceenNew(storyNum))
+	if(playLoc.X == loc.X&&playLoc.Y == loc.Y)
 	{
-		play->setWatched(storyNum);
-		return true;
+		if(play->sceenNew(storyNum))
+		{
+			play->setWatched(storyNum);
+			return true;
+		}
 	}
 	return false;
 }

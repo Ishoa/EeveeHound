@@ -30,5 +30,6 @@ public:
 	void battleResetWithMoves(Pokemon a_pikachu);
 	void setRes(int w,int h);
 	void MoveMouseToBut(int button);
+	void setQuitMenu();
 	Button getBut(int button);
 };

@@ -344,3 +344,14 @@ Button Menu::getBut(int but)
 	else
 		return buttons[0];
 }
+
+void Menu::setQuitMenu()
+{
+	for(int i = 0;i<numBut;++i)
+	{
+		buttons[i].setVisable(false);
+	}
+	buttons[0].setVisable(true);
+	buttons[0].setlable(L"Quit");
+	buttons[0].setLoc(100+60*4,150+60*4,300,500);
+}

@@ -13,5 +13,5 @@ public:
 	void setLoc(Pos);
 	int getStoryNum();
 	Pos getLoc();
-	bool update(PlayerState*);
+	bool update(PlayerState*,Pos);
 };
