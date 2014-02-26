@@ -17,6 +17,7 @@ DirectXFrame::DirectXFrame()
 	ltime = GetTickCount();
 	curTime = ltime;
 	dt = 0;
+	waittime = 0;
 }
 
 DirectXFrame::~DirectXFrame()
@@ -106,6 +107,9 @@ void DirectXFrame::Init(HWND& hWnd, HINSTANCE& hInst, bool bWindowed)
 	m_pD3DDevice->SetRenderState( D3DRS_SPECULARENABLE, TRUE);
 	m_pD3DDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(60, 60, 60));
 	m_pD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
+	m_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	m_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	ZeroMemory(&m_Light, sizeof(m_Light));
 
@@ -158,7 +162,7 @@ void DirectXFrame::Render(cam &caminf,D3Object D3Objs[],int NumObjs,renderInfo R
 	rect.top = 0;
 
 
-	if(SUCCEEDED(m_pD3DDevice->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DXCOLOR(0.0f, 0.4f, 0.8f, 1.0f), 1.0f, 0)))
+	if(SUCCEEDED(m_pD3DDevice->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 1.0f, 0)))
 	{
 		if(SUCCEEDED(m_pD3DDevice->BeginScene()))
 		{
@@ -209,11 +213,13 @@ void DirectXFrame::Render(cam &caminf,D3Object D3Objs[],int NumObjs,renderInfo R
 				m_pD3DFont->DrawText(0,Texts[i].text,-1,&Texts[i].rec,DT_TOP|DT_CENTER|DT_NOCLIP,Texts[i].textColor);
 			}
 			//end text
+			/*
 			//fps start
 			wchar_t buffer[190];
 			swprintf_s(buffer, 190, L"FPS: %d", FPS);
 			m_pD3DFont->DrawText(0, buffer, -1, &rect, DT_TOP | DT_NOCLIP, D3DCOLOR_ARGB(255, 255, 255, 255));
 			//fps end
+			*/
 			m_pD3DDevice->EndScene();	
 		}
 		m_pD3DDevice->Present(NULL,NULL,NULL,NULL);
@@ -225,6 +231,7 @@ void DirectXFrame::Render(cam &caminf,D3Object D3Objs[],int NumObjs,renderInfo R
 		FPS = frams;
 		frams = 0;
 		ltime = curTime;
+		++waittime;
 	}
 	else
 	{
@@ -692,4 +699,13 @@ void DirectXFrame::CreateUncenteredCube(D3Object& obj,float h,float w,float d)
 
 	obj.numVerts = 24;
 	obj.numPrim = 12;
+}
+
+void DirectXFrame::zeroWaitTime() {
+	waittime = 0;
+}
+
+
+int DirectXFrame::getWaitTime() {
+	return waittime;
 }

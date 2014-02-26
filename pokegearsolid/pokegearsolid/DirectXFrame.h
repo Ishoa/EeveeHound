@@ -21,6 +21,7 @@ class DirectXFrame
 	int width;
 	int height;
 	int FPS;
+	int waittime;
 	float dt,frams,ltime,curTime;
 
 	IDirect3D9* m_pD3DObject;
@@ -42,4 +43,6 @@ public:
 	void CreateUVCube(D3Object&,float height,float width,float depth);
 	void CreateUncenteredCube(D3Object&,float height,float width,float depth);
 	void Shutdown();
+	void zeroWaitTime();
+	int getWaitTime();
 };

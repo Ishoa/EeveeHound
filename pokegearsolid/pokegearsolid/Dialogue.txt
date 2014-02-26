@@ -1,0 +1,33 @@
+Snake#P#i#k#a#c#h#u #d#o# y#o#u #r#e#a#d #m#e#?#stop#
+SolidChu#P#i#i#i# #P#i#k#a#c#h#u #(#L#o#u#d #a#n#d #C#l#e#a#r#)#stop#
+Snake#L#i#s#t#e#n #u#p #P#i#k#a#c#h#u#, #th#i#n#g#s #a#r#e #b#a#d #d#o#w#n #t#h#e#r#e#stop#
+Snake#Y#o#u#r #j#o#b #i#s #t#o #s#n#e#a#k #i#n #a#n#d #f#i#n#d #o#u#t #w#h#a#t#s #g#o#i#n#g #o#n#stop#
+Snake#A#l#s#o #r#e#p#o#r#t#s #a#r#e #s#a#y#i#n#g #t#h#a#t #E#v#i#l#C#h#u #i#s #p#a#y#i#n#g #t#h#i#s# #c#o#m#p#l#e#x #a #v#i#s#i#t#stop#
+SolidChu#P#i#i# #(#T#h#a#t#'#s #g#o#o#d#, #g#i#v#e#s #u#s #a #c#h#a#n#c#e #t#o #s#e#t#t#l#e #t#h#e# #s#c#o#r#e#)#stop#
+SolidChu#"#P#i#k#a#c#h#u #l#i#g#h#t#s #a #c#i#g#a#r#e#t#t#e#"#stop#
+NurseJoy#H#e#l#l#o #M#y #n#a#m#e #i#s #N#u#r#s#e #J#o#y#stop#
+NurseJoy#I #w#l#l #b#e #e#x#p#l#a#i#n#i#n#g #h#o#w #y#o#u#r #s#y#s#t#e#m#s #w#o#r#k#.#stop#
+SolidChu#P#i#k#a #P#i#k#a #C#h#u#u#u#u#u#u#stop#
+SolidChu#(#W#o#w #d#i#d#n#t #e#x#p#e#c#t #m#y #w#e#a#p#o#n#s #s#p#e#c#i#a#l#i#s#t #t#o #b#e #s#u#c#h #a #c#u#t#e #b#a#b#e#)#stop#
+NurseJoy#O#h #c#u#t #i#t #o#u#t#!#stop#
+NurseJoy#I #c#a#n#'#t #b#e#l#e#i#v#e #I#'#m #b#e#i#n#g #h#i#t #o#n #b#y #t#h#e #f#a#m#o#u#s #S#o#l#i#d #C#h#u#!#stop#
+SolidChu#c#h#u #(#I#'#m #j#u#s#t #s#t#a#t#i#n#g #t#h#e #o#b#v#i#o#u#s #h#e#r#e#)#stop#
+NurseJoy#*#b#l#u#s#h#* #W#e#l#l #l#e#t #m#e #g#i#v#e #y#o#u #a #r#u#n#d#o#w#n #o#f #h#o#w #t#h#i#n#g#s #w#o#r#k#stop#
+NurseJoy#U#s#e #t#h#e #A#r#r#o#w #K#e#y#s #t#o #w#a#l#k #i#n #t#h#e#i#r #r#e#s#p#e#c#t#i#v#e #p#o#s#i#t#i#o#n#s#stop#
+NurseJoy#(#u#p#,#d#o#w#n#,#l#e#f#t#,#r#i#g#h#t#)#stop#
+NurseJoy#R#e#m#e#m#b#e#r #e#a#c#h #s#t#e#p #m#o#v#e#s #t#i#m#e #b#y #o#n#e #i#n#t#e#r#v#a#l#stop#
+SolidChu#P#i #p#i#k#a #p#i #c#h#u#stop#
+SolidChu#(#A#l#r#i#g#h#t #s#o #l#e#f#t#, #r#i#g#h#t#, #u#p#, #d#o#w#n #k#e#y#s #t#o #m#o#v#e #a#r#o#u#n#d#,#)#stop#
+SolidChu#(#a#n#d #e#v#e#r#y #s#t#e#p #I #s#h#o#u#l#d #e#x#p#e#c#t #t#h#e #e#n#e#m#e#y #t#o #m#o#v#e #a #s#t#e#p #a#s #w#e#l#l#?#)#stop#
+SolidChu#O#k #g#o#t #i#t#!#stop#
+NurseJoy#I #s#h#o#u#l#d#n#'#t #e#x#p#e#c#t #a#n#y#t#h#i#n#g #l#e#s#s #f#r#o#m #t#h#e #l#e#g#e#n#d#a#r#y #S#o#l#i#d #C#h#u#!#stop#
+Snake#A#l#r#i#g#h#t #l#e#t#s #c#u#t #t#h#e #c#h#a#t#t#e#r #t#i#m#e #t#o #g#e#t #t#o #w#o#r#k#!#stop#
+NurseJoy#R#o#g#e#r#!#stop#
+SolidChu#C#H#U #C#H#U #C#H#U #P#I#K#A#C#H#U#stop#
+SolidChu#R#o#g#e#r#stop#
+endscene#endscene#
+EvilChu#(#G#r#u#n#t#s#)#stop#
+EvilChu#W#e#l#l #i#f #i#t #i#s#n#t #t#h#e #r#u#n#t#, #c#o#m#e #t#o #d#i#e #c#h#u#?#stop#
+SolidChu#B#R#O#T#H#E#R #L#E#T#S #F#I#N#I#S#H #T#H#I#S #N#O#W#!#!#stop#
+EvilChu#T#h#e #o#n#l#y #t#h#i#n#g #t#h#a#t #w#i#l#l #b#e #f#i#n#i#s#h#e#d #i#s #y#o#u#, #l#i##t#t#l#e #r#a#t#, #T#I#M#E #T#O #D#IE!#!#stop#
+endscene#endscene#

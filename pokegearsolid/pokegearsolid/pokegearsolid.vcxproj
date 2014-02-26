@@ -74,9 +74,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Battle.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="curosr.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="Dio.h" />
     <ClInclude Include="DirectXFrame.h" />
     <ClInclude Include="dxinput.h" />
     <ClInclude Include="EntAI.h" />
@@ -91,8 +93,10 @@
     <ClInclude Include="Stealth.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Battle.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="cursor.cpp" />
+    <ClCompile Include="Dio.cpp" />
     <ClCompile Include="DirectXFrame.cpp" />
     <ClCompile Include="dxinput.cpp" />
     <ClCompile Include="EntAI.cpp" />
@@ -103,11 +107,13 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PokeGear.cpp" />
+    <ClCompile Include="Pokemon.cpp" />
     <ClCompile Include="SoundFrame.cpp" />
     <ClCompile Include="Stealth.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Dialogue.txt" />
     <None Include="fmodex.dll" />
     <None Include="playtex.bmp" />
     <None Include="uvtest.png" />

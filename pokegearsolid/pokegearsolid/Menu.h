@@ -5,6 +5,7 @@
 #include "Defines.h"
 #include "curosr.h"
 #include "Button.h"
+#include "Pokemon.h"
 #define numBut 11
 
 class Menu
@@ -25,6 +26,8 @@ public:
 	void GetRender(renderInfo&,int& numSprite,TextStruct[],int& numText);
 	void getMousePos(int &X,int &Y);
 	void reset();
+	void battleReset();
+	void battleResetWithMoves(Pokemon a_pikachu);
 	void setRes(int w,int h);
 	void MoveMouseToBut(int button);
 	Button getBut(int button);

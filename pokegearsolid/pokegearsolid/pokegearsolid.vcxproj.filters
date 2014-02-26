@@ -60,6 +60,12 @@
     <ClInclude Include="EntStoryTrigger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Battle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXFrame.cpp">
@@ -107,6 +113,15 @@
     <ClCompile Include="EntLoadTrigger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Battle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pokemon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="playtex.bmp">
@@ -116,6 +131,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="uvtest.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Dialogue.txt">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

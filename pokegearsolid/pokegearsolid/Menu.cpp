@@ -61,6 +61,88 @@ void Menu::reset()
 
 
 
+void Menu::battleReset() {
+	int w,h;
+	//store curent res
+	h = height;
+	w = width;
+	//change res for ez placment
+	height = 600;
+	width = 800;
+	setRes(width,height);
+	buttons[0].setActive(true);
+	buttons[0].setLoc(450,525,10,210);
+	buttons[1].setActive(true);
+	buttons[1].setLoc(450,525,210,410);
+	buttons[2].setActive(true);
+	buttons[2].setLoc(525,600,10,210);
+	buttons[3].setActive(true);
+	buttons[3].setLoc(525,600,210,410);
+
+	for(int i = 4;i<numBut;++i)
+	{
+		buttons[i].setActive(false);
+		buttons[i].setLoc(100+60*i,150+60*i,300,500);
+	}
+	buttons[0].setlable(L"Fight");
+	buttons[0].setVisAct(true);
+	buttons[1].setlable(L"Bag");
+	buttons[1].setVisAct(true);
+	buttons[2].setlable(L"Pokemon");
+	buttons[2].setVisAct(true);
+	buttons[3].setlable(L"Run");
+	buttons[3].setVisAct(true);
+	for(int i = 4;i<numBut;++i)
+	{
+		buttons[i].setlable(L"Blank");
+		buttons[i].setVisAct(false);
+	}
+	//reset res
+	setRes(800,600);
+}
+
+
+void Menu::battleResetWithMoves(Pokemon a_pikachu) {
+	int w,h;
+	//store curent res
+	h = height;
+	w = width;
+	//change res for ez placment
+	height = 600;
+	width = 800;
+	setRes(width,height);
+	buttons[0].setActive(true);
+	buttons[0].setLoc(450,525,10,210);
+	buttons[1].setActive(true);
+	buttons[1].setLoc(450,525,210,410);
+	buttons[2].setActive(true);
+	buttons[2].setLoc(525,600,10,210);
+	buttons[3].setActive(true);
+	buttons[3].setLoc(525,600,210,410);
+
+	for(int i = 4;i<numBut;++i)
+	{
+		buttons[i].setActive(false);
+		buttons[i].setLoc(100+60*i,150+60*i,300,500);
+	}
+	buttons[0].setlable(a_pikachu.getMove(0).getName());
+	buttons[0].setVisAct(true);
+	buttons[1].setlable(a_pikachu.getMove(1).getName());
+	buttons[1].setVisAct(true);
+	buttons[2].setlable(a_pikachu.getMove(2).getName());
+	buttons[2].setVisAct(true);
+	buttons[3].setlable(a_pikachu.getMove(3).getName());
+	buttons[3].setVisAct(true);
+	for(int i = 4;i<numBut;++i)
+	{
+		buttons[i].setlable(L"Blank");
+		buttons[i].setVisAct(false);
+	}
+	//reset res
+	setRes(800,600);
+}
+
+
 void Menu::setMouseSprite(renderInfo sprite)
 {
 	cur.setSprite(sprite);
@@ -207,7 +289,7 @@ void Menu::Update(char keyboard[],DIMOUSESTATE2& mouse,bool &pushed)
 void Menu::GetRender(renderInfo& mou,int& sprites,TextStruct tex[],int& text)
 {
 	mou = cur.getRend();
-	++sprites;
+ 	++sprites;
 	for(int i = 0;i<numBut;++i)
 	{
 		if(buttons[i].getVisable())

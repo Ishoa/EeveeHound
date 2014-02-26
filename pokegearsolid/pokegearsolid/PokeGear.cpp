@@ -8,7 +8,14 @@ PokeGear::PokeGear()
 	camera.cam_look_pos = D3DXVECTOR3(0,0,-4);
 	bCanInput = true;
 	menuPushed = false;
+	donePlayerAttack = false;
+	doneEnemyAttack = false;
+	battleover = false;
+	playerlost = false;
 	curState = MainMenu;
+	curBattleState = MAIN;
+	bCanInput2 = true;
+	newscene=true;
 }
 
 void PokeGear::init(HWND& hWnd, HINSTANCE& hInst, bool bWindowed)
@@ -47,6 +54,40 @@ void PokeGear::init(HWND& hWnd, HINSTANCE& hInst, bool bWindowed)
 	//enemy texture
 	display.LoadTex(L"enemy.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_XRGB(0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
 	++tex;
+	// BATTLE TEXTURES START
+	//battle background texture
+	display.LoadTex(L"battlebackground.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_ARGB(0,0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
+	++tex;
+	//battle pikachu texture
+	display.LoadTex(L"battlepikachu.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_ARGB(0,0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
+	++tex;
+	//battle ratata texture
+	display.LoadTex(L"battlerattata.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_ARGB(0,0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
+	++tex;
+	//battle zubat texture
+	display.LoadTex(L"battlezubat.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_ARGB(0,0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
+	++tex;
+	//battle koffing texture
+	display.LoadTex(L"battlekoffing.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_ARGB(0,0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
+	++tex;
+	//battle ekans texture
+	display.LoadTex(L"battleekans.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_ARGB(0,0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
+	++tex;
+
+	//character sprites
+	//snake
+	display.LoadTex(L"snake.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_XRGB(0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
+	++tex;
+	//joy
+	display.LoadTex(L"joy.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_XRGB(0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
+	++tex;
+	//pikachu
+	display.LoadTex(L"solidchu.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_XRGB(0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
+	++tex;
+	//evilchu
+	display.LoadTex(L"evilchu.png",0,0,0,0,D3DFMT_UNKNOWN,D3DPOOL_MANAGED,D3DX_DEFAULT,D3DX_DEFAULT,D3DCOLOR_XRGB(0,0,0),&textures[tex].texInfo,0,&textures[tex].objTex);
+	++tex;
+
 	//world Model base
 	display.CreateUncenteredCube(Models[1],1,1,1);
 	//create enemy model
@@ -80,6 +121,14 @@ void PokeGear::init(HWND& hWnd, HINSTANCE& hInst, bool bWindowed)
 	curSpri.texinfo = textures[0].texInfo;
 	menuSys.setMouseSprite(curSpri);
 
+	talks.init(textures);
+
+	Menu tempmenu;
+	tempmenu.battleReset();
+	tempmenu.setMouseSprite(curSpri);
+	battler.setBattleMenu(tempmenu);
+	battler.Init(textures);
+
 	//load music
 	soundSys.loadStream("MGSMain.mp3",0);
 	soundSys.loadStream("MGSSneak.mp3",1);
@@ -111,7 +160,7 @@ void PokeGear::update()
 				switch(tempInt)
 				{
 				case 0:
-					curState = stealth;
+					curState = story;
 					soundSys.PlayStream(0,true);
 					soundSys.PlayStream(1,false);
 					break;
@@ -127,18 +176,193 @@ void PokeGear::update()
 		//update and get render for map and ents
 		tempInt = sneak.Update(keyboard,bCanInput,mouse,curPlay,&soundSys);
 		sneak.getRend(D3Objs,numobjs,Sprites,numSprits,Text,numText);
-		temp = curPlay.getRen();
-		//move cam
-		camera.cam_pos.x = temp.X;
-		camera.cam_pos.y = temp.Y;
-		camera.cam_look_pos.x = temp.X;
-		camera.cam_look_pos.y = temp.Y;
-		//add player to draw list
-		D3DXMatrixTranslation(&Models[0].matrix,temp.X,temp.Y,temp.Z);
-		D3Objs[numobjs] = Models[0];
-		D3DXMatrixTranslation(&D3Objs[numobjs].matrix,temp.X,temp.Y,temp.Z);
-		++numobjs;
+		switch(tempInt)
+		{
+		case 0:
+			temp = curPlay.getRen();
+			//move cam
+			camera.cam_pos.x = temp.X;
+			camera.cam_pos.y = temp.Y;
+			camera.cam_look_pos.x = temp.X;
+			camera.cam_look_pos.y = temp.Y;
+			//add player to draw list
+			D3DXMatrixTranslation(&Models[0].matrix,temp.X,temp.Y,temp.Z);
+			D3Objs[numobjs] = Models[0];
+			D3DXMatrixTranslation(&D3Objs[numobjs].matrix,temp.X,temp.Y,temp.Z);
+			++numobjs;
+			break;
+		case 1:
+			curState = battle;
+			curBattleState = BATTLESTART;
+			break;
+		case 2:
+			newscene = true;
+			curState = story;
+			break;
+		}
 		//end stealth
+		break;
+	case story:
+		talks.update(keyboard,bCanInput2,newscene);
+		talks.getRend(Sprites,numSprits,Text,numText);
+		if(talks.getname() == "endscene")
+		{
+			curState = stealth;
+		}
+		break;
+	case battle:
+		battler.GetBattleRender(Sprites,numSprits,Text,numText,curPlay.getEnemy().getSpecies());
+		switch(curBattleState) {
+		case BATTLESTART:
+			curPlay.randomizeEnemy();
+			battler.menuReset(curPlay.getPikachu(),curPlay.getEnemy());
+			curBattleState = MAIN;
+			break;
+		case MAIN:
+			if((mouse.rgbButtons[0]&0x80)||(keyboard[DIK_RETURN]&0x80)) {
+				if(battler.getBattleMenu().getPushed(tempInt,menuPushed)) {
+					switch(tempInt) {
+					case 0: // Fight
+						curBattleState = MOVES;
+						battler.menuResetWithMoves(curPlay.getPikachu(),curPlay.getEnemy());
+						break;
+					case 1: // Bag
+
+						break;
+					case 2: // Pokemon
+
+						break;
+					case 3: // Run
+
+						break;
+					}
+				}
+			}
+			break;
+		case MOVES:
+			if((mouse.rgbButtons[0]&0x80)||(keyboard[DIK_RETURN]&0x80)) {
+				if(battler.getBattleMenu().getPushed(tempInt,menuPushed)) {
+					switch(tempInt) {
+					case 0:
+						if(curPlay.getPikachu().getMove(0).getCurPP() > 0) {
+							curPlay.setPlayerMove(0);
+							curPlay.decrementPikaPP(0);
+							battler.menuResetWithMoves(curPlay.getPikachu(),curPlay.getEnemy());
+							//display.zeroWaitTime();
+							curBattleState = WAIT;
+						}
+						else {
+
+						}
+						break;
+					case 1:
+						if(curPlay.getPikachu().getMove(1).getCurPP() > 0) {
+							curPlay.setPlayerMove(1);
+							curPlay.decrementPikaPP(1);
+							battler.menuResetWithMoves(curPlay.getPikachu(),curPlay.getEnemy());
+							//display.zeroWaitTime();
+							curBattleState = WAIT;
+						}
+						else {
+
+						}
+						break;
+					case 2:
+						if(curPlay.getPikachu().getMove(2).getCurPP() > 0) {
+							curPlay.setPlayerMove(2);
+							curPlay.decrementPikaPP(2);
+							battler.menuResetWithMoves(curPlay.getPikachu(),curPlay.getEnemy());
+							//display.zeroWaitTime();
+							curBattleState = WAIT;
+						}
+						else {
+
+						}
+						break;
+					case 3:
+						if(curPlay.getPikachu().getMove(3).getCurPP() > 0) {
+							curPlay.setPlayerMove(3);
+							curPlay.decrementPikaPP(3);
+							battler.menuResetWithMoves(curPlay.getPikachu(),curPlay.getEnemy());
+							//display.zeroWaitTime();
+							curBattleState = WAIT;
+						}
+						else {
+
+						}
+						break;
+					}
+				}
+			}
+			break;
+		case WAIT:
+			if(display.getWaitTime() >= 4 && !battleover) {
+				if(donePlayerAttack && doneEnemyAttack) {
+					display.zeroWaitTime();
+					battler.menuReset(curPlay.getPikachu(), curPlay.getEnemy());
+					curBattleState = MAIN;
+					donePlayerAttack = false;
+					doneEnemyAttack = false;
+				}
+				else {
+					display.zeroWaitTime();
+					curBattleState = RESOLVEMOVES;
+				}
+			}
+			else if(display.getWaitTime() >= 4 && battleover) {
+				curBattleState = BATTLESTART;
+				curState = stealth;
+				donePlayerAttack = false;
+				doneEnemyAttack = false;
+				battleover = false;
+			}
+
+			break;
+		case RESOLVEMOVES:
+			if(curPlay.getPikachu().getCurHP() <=0) {
+				playerlost = true;
+				curBattleState = BATTLESTART;
+				curState = GameOver;
+				curPlay.initPikachu();
+				donePlayerAttack = false;
+				doneEnemyAttack = false;
+				battleover = false;
+			}
+			else if(curPlay.getPikachu().getSpeed() >= curPlay.getEnemy().getSpeed() && !donePlayerAttack || doneEnemyAttack) {
+				curPlay.resolveMoveInOrder(true);
+				donePlayerAttack = true;
+				battler.menuResetWithMoves(curPlay.getPikachu(), curPlay.getEnemy());
+				battler.addText(curPlay.getPikachu(),curPlay.getPikachu().getMove(curPlay.getPlayerMove()));
+			}
+			else if(curPlay.getEnemy().getCurHP() > 0){
+				int randomenemymove = rand()%4;
+				curPlay.setEnemyMove(randomenemymove);
+				curPlay.decrementEnemyPP(randomenemymove);
+				curPlay.resolveMoveInOrder(false);
+				doneEnemyAttack = true;
+				battler.menuResetWithMoves(curPlay.getPikachu(), curPlay.getEnemy());
+				battler.addText(curPlay.getEnemy(),curPlay.getEnemy().getMove(curPlay.getEnemyMove()));
+			}
+			else {
+				doneEnemyAttack = false;
+				donePlayerAttack = false;
+				battleover = true;
+			}
+			if(battleover)
+				curBattleState = OVER;
+			else
+				curBattleState = WAIT;
+			break;
+		case OVER:
+			display.zeroWaitTime();
+			battler.addYouWin();
+			curBattleState = WAIT;
+			break;
+		}
+		battler.Update(keyboard,mouse,menuPushed);
+		break;
+	case GameOver:
+		curState = MainMenu;
 		break;
 	}
 	display.Render(camera,D3Objs,numobjs,Sprites,numSprits,Text,numText);

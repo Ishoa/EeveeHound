@@ -195,6 +195,7 @@ int Stealth::Update(char keyboard[],bool& takeinput,DIMOUSESTATE2& mouse,PlayerS
 								AIList[i].setStuned(stunTime);
 								//start battle
 								soundSys->Play(0);
+								return 1;
 							}
 						}
 						else
