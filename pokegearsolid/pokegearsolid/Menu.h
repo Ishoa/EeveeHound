@@ -22,6 +22,8 @@ public:
 	bool buttonIsPushed(int button);
 	bool getPushed(int &buttonPushed,bool&);
 	void Update(char keyboard[],DIMOUSESTATE2& mouse,bool &pushed);
+	void OptionsReset();
+	void CreditsReset();
 	void setMouseSprite(renderInfo sprite);
 	void GetRender(renderInfo&,int& numSprite,TextStruct[],int& numText);
 	void getMousePos(int &X,int &Y);

@@ -25,7 +25,9 @@ enum gameState
 	story,
 	battle,
 	GameOver,
-	victory
+	victory,// Balls to the wall I'm putting some states here
+	options,
+	credits
 };
 
 enum battleState {

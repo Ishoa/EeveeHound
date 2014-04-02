@@ -209,10 +209,10 @@ void resolveMove(Pokemon& a_user, Pokemon& a_enemy, int a_move) {
 	if(random > a_user.getMove(a_move).getAccuracy())// Checks if it hits or misses, true for hit, false for miss
 		hitormiss = false;
 	if(hitormiss) {
-		if(a_user.getMove(a_move).getWhichStat() == 0)// Checks to see which stat the move needs, 0 for Attack, 1 for Spec Attack, 2 for no stat
-			tempdamage = a_user.getMove(a_move).getDamage()+a_user.getAttack()/5;
-		else if(a_user.getMove(a_move).getWhichStat() == 1)
-			tempdamage = a_user.getMove(a_move).getDamage()+a_user.getSpecAtt()/5;
+		if(a_user.getMove(a_move).getWhichStat() == 0) // Checks to see which stat the move needs, 0 for Attack, 1 for Spec Attack, 2 for no stat
+			tempdamage = a_user.getMove(a_move).getDamage()+a_user.getAttack()/5 - a_enemy.getDefense()/5;
+		else if(a_user.getMove(a_move).getWhichStat() == 1) 
+			tempdamage = a_user.getMove(a_move).getDamage()+a_user.getSpecAtt()/5 - a_enemy.getSpecDef()/5;
 		else
 			tempdamage = 0;
 		if(a_user.getType() == a_user.getMove(a_move).getType()) // STAB

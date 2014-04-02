@@ -193,9 +193,9 @@ Pokemon::Pokemon(wchar_t* a_name, Species a_species, Type a_type, Type a_type2, 
 void Pokemon::init(wchar_t* a_name) {
 	if(a_name == L"Solid Chu") {
 		setAttack(55);
-		setCurHP(35);
+		setCurHP(140);
 		setDefense(30);
-		setMaxHP(35);
+		setMaxHP(140);
 		setName(a_name);
 		setSpecAtt(50);
 		setSpecDef(40);
@@ -212,9 +212,9 @@ void Pokemon::init(wchar_t* a_name) {
 	}
 	else if(a_name == L"RATATA") {
 		setAttack(56);
-		setCurHP(30);
+		setCurHP(90);
 		setDefense(35);
-		setMaxHP(30);
+		setMaxHP(90);
 		setName(a_name);
 		setSpecAtt(25);
 		setSpecDef(35);
@@ -231,9 +231,9 @@ void Pokemon::init(wchar_t* a_name) {
 	}
 	else if(a_name == L"ZUBAT") {
 		setAttack(45);
-		setCurHP(40);
+		setCurHP(120);
 		setDefense(35);
-		setMaxHP(40);
+		setMaxHP(120);
 		setName(a_name);
 		setSpecAtt(30);
 		setSpecDef(40);
@@ -250,9 +250,9 @@ void Pokemon::init(wchar_t* a_name) {
 	}
 	else if(a_name == L"KOFFING") { 
 		setAttack(65);
-		setCurHP(40);
+		setCurHP(120);
 		setDefense(95);
-		setMaxHP(40);
+		setMaxHP(120);
 		setName(a_name);
 		setSpecAtt(60);
 		setSpecDef(45);
@@ -271,7 +271,7 @@ void Pokemon::init(wchar_t* a_name) {
 		setAttack(60);
 		setCurHP(105);
 		setDefense(44);
-		setMaxHP(35);
+		setMaxHP(105);
 		setName(a_name);
 		setSpecAtt(40);
 		setSpecDef(54);

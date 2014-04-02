@@ -21,6 +21,7 @@ private:
 	Sound sounds[maxSounds];
 	Sound streams[maxStreams];
 	char name[256];
+
 public:
 	SoundFrame();
 	void Init();

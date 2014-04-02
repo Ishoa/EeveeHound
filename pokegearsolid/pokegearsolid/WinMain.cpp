@@ -96,7 +96,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 	pokegear.shutdown();
 	// Unregister window
 	UnregisterClass(WINDOW_TITLE, g_hInstance);
-
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	// Return successful
 	return 0;
 }

@@ -166,6 +166,7 @@ void PokeGear::update()
 		menuSys.GetRender(Sprites[numSprits],numSprits,Text,numText);
 		tempRend.tex = textures[13].objTex;
 		D3DXMatrixIdentity(&tempRend.matrix);
+		D3DXMatrixScaling(&tempRend.matrix,1.3f,1.3f,1.3f);
 		Sprites[numSprits] = tempRend;
 		++numSprits;
 		if((mouse.rgbButtons[0]&0x80)||(keyboard[DIK_RETURN]&0x80))
@@ -179,8 +180,50 @@ void PokeGear::update()
 					soundSys.PlayStream(0,true);
 					soundSys.PlayStream(1,musicMute);
 					break;
+				case 2:
+					curState = options;
+					menuSys.OptionsReset();
+					break;
+				case 3:
+					curState = credits;
+					menuSys.CreditsReset();
+					break;
 				case 4:
 					PostQuitMessage(0);
+					break;
+				}
+			}
+		}
+		menuSys.Update(keyboard,mouse,menuPushed);
+		break;
+	case options:
+		menuSys.GetRender(Sprites[numSprits],numSprits,Text,numText);
+		if((mouse.rgbButtons[0]&0x80)||(keyboard[DIK_RETURN]&0x80))
+		{
+			if(menuSys.getPushed(tempInt,menuPushed))
+			{
+				switch(tempInt)
+				{
+				case 4:
+					curState = MainMenu;
+					menuSys.reset();
+					break;
+				}
+			}
+		}
+		menuSys.Update(keyboard,mouse,menuPushed);
+		break;
+	case credits:
+		menuSys.GetRender(Sprites[numSprits],numSprits,Text,numText);
+		if((mouse.rgbButtons[0]&0x80)||(keyboard[DIK_RETURN]&0x80))
+		{
+			if(menuSys.getPushed(tempInt,menuPushed))
+			{
+				switch(tempInt)
+				{
+				case 4:
+					curState = MainMenu;
+					menuSys.reset();
 					break;
 				}
 			}
@@ -233,6 +276,11 @@ void PokeGear::update()
 		break;
 	case battle:
 		battler.GetBattleRender(Sprites,numSprits,Text,numText,curPlay.getEnemy().getSpecies());
+		if(curPlay.getPikachu().getCurHP() <=0) {
+			curBattleState = RESOLVEMOVES;
+			
+		}
+
 		switch(curBattleState) {
 		case BATTLESTART:
 			curPlay.randomizeEnemy();
@@ -354,7 +402,7 @@ void PokeGear::update()
 				doneEnemyAttack = false;
 				battleover = false;
 			}
-			else if(curPlay.getPikachu().getSpeed() >= curPlay.getEnemy().getSpeed() && !donePlayerAttack || doneEnemyAttack) {
+			else if(curPlay.getPikachu().getSpeed() >= curPlay.getEnemy().getSpeed() && !donePlayerAttack || doneEnemyAttack || curPlay.getPikachu().getMove(curPlay.getPlayerMove()).getPriority() == 1 && !donePlayerAttack) {
 				curPlay.resolveMoveInOrder(true);
 				donePlayerAttack = true;
 				battler.menuResetWithMoves(curPlay.getPikachu(), curPlay.getEnemy());
@@ -391,6 +439,7 @@ void PokeGear::update()
 		menuSys.GetRender(Sprites[numSprits],numSprits,Text,numText);
 		tempRend.tex = textures[14].objTex;
 		D3DXMatrixIdentity(&tempRend.matrix);
+		D3DXMatrixScaling(&tempRend.matrix,0.6f,0.6f,0.6f);
 		Sprites[numSprits] = tempRend;
 		++numSprits;
 		if((mouse.rgbButtons[0]&0x80)||(keyboard[DIK_RETURN]&0x80))

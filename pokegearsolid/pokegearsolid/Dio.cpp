@@ -138,7 +138,7 @@ void Dio::update(char keyboard[],bool& takeinput,bool& newscene)
 			if (readtext)
 			{
 				//print text
-				for (int timelapse=textDebug;timelapse>=0;timelapse--)
+				for (int timelapse=textWait;timelapse>=0;timelapse--)
 				{
 					if (timelapse==0)
 					{

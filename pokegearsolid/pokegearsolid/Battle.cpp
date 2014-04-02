@@ -80,25 +80,25 @@ void Battle::menuReset(Pokemon a_pikachu, Pokemon a_enemy) {
 	battletext[curtextincrement].text = L"hp:"; // hp's hp:
 	battletext[curtextincrement].rec.top = 525;
 	battletext[curtextincrement].rec.bottom = 600;
-	battletext[curtextincrement].rec.left = 540;
-	battletext[curtextincrement].rec.right = 800;
+	battletext[curtextincrement].rec.left = 490;
+	battletext[curtextincrement].rec.right = 720;
 	++curtextincrement;
 	battletext[curtextincrement].text = terribleJankyIntToLPCWSTR(a_pikachu.getCurHP()); // Pikachu's curhp
 	battletext[curtextincrement].rec.top = 525;
 	battletext[curtextincrement].rec.bottom = 600;
-	battletext[curtextincrement].rec.left = 600;
-	battletext[curtextincrement].rec.right = 800;
+	battletext[curtextincrement].rec.left = 555;
+	battletext[curtextincrement].rec.right = 750;
 	++curtextincrement;
 	battletext[curtextincrement].text = L"/"; // hp's slash
 	battletext[curtextincrement].rec.top = 525;
 	battletext[curtextincrement].rec.bottom = 600;
-	battletext[curtextincrement].rec.left = 640;
-	battletext[curtextincrement].rec.right = 800;
+	battletext[curtextincrement].rec.left = 610;
+	battletext[curtextincrement].rec.right = 780;
 	++curtextincrement;
 	battletext[curtextincrement].text = terribleJankyIntToLPCWSTR(a_pikachu.getMaxHP()); // pikach's max hp
 	battletext[curtextincrement].rec.top = 525;
 	battletext[curtextincrement].rec.bottom = 600;
-	battletext[curtextincrement].rec.left = 680;
+	battletext[curtextincrement].rec.left = 660;
 	battletext[curtextincrement].rec.right = 800;
 	++curtextincrement;
 	//  enemy start
@@ -153,25 +153,25 @@ void Battle::menuResetWithMoves(Pokemon a_pikachu, Pokemon a_enemy) {
 	battletext[curtextincrement].text = L"hp:"; // hp's hp:
 	battletext[curtextincrement].rec.top = 525;
 	battletext[curtextincrement].rec.bottom = 600;
-	battletext[curtextincrement].rec.left = 540;
-	battletext[curtextincrement].rec.right = 800;
+	battletext[curtextincrement].rec.left = 490;
+	battletext[curtextincrement].rec.right = 720;
 	++curtextincrement;
 	battletext[curtextincrement].text = terribleJankyIntToLPCWSTR(a_pikachu.getCurHP()); // Pikachu's curhp
 	battletext[curtextincrement].rec.top = 525;
 	battletext[curtextincrement].rec.bottom = 600;
-	battletext[curtextincrement].rec.left = 600;
-	battletext[curtextincrement].rec.right = 800;
+	battletext[curtextincrement].rec.left = 555;
+	battletext[curtextincrement].rec.right = 750;
 	++curtextincrement;
 	battletext[curtextincrement].text = L"/"; // hp's slash
 	battletext[curtextincrement].rec.top = 525;
 	battletext[curtextincrement].rec.bottom = 600;
-	battletext[curtextincrement].rec.left = 640;
-	battletext[curtextincrement].rec.right = 800;
+	battletext[curtextincrement].rec.left = 610;
+	battletext[curtextincrement].rec.right = 780;
 	++curtextincrement;
-	battletext[curtextincrement].text = terribleJankyIntToLPCWSTR(a_pikachu.getMaxHP()); // pikachu's max hp
+	battletext[curtextincrement].text = terribleJankyIntToLPCWSTR(a_pikachu.getMaxHP()); // pikach's max hp
 	battletext[curtextincrement].rec.top = 525;
 	battletext[curtextincrement].rec.bottom = 600;
-	battletext[curtextincrement].rec.left = 680;
+	battletext[curtextincrement].rec.left = 660;
 	battletext[curtextincrement].rec.right = 800;
 	++curtextincrement;
 	//  enemy start

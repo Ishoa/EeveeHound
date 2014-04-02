@@ -38,13 +38,13 @@ void Menu::reset()
 	for(int i = 0;i<numBut;i++)
 	{
 		buttons[i].setActive(true);
-		buttons[i].setLoc(100+60*i,150+60*i,300,500);
+		buttons[i].setLoc(250+60*i,325+60*i,500,700);
 	}
 	buttons[0].setlable(L"Play");
 	buttons[0].setVisAct(true);
 	buttons[1].setlable(L"Intro");
 	buttons[1].setVisAct(false);
-	buttons[2].setlable(L"Options");
+	buttons[2].setlable(L"Controls");
 	buttons[2].setVisAct(true);
 	buttons[3].setlable(L"Credits");
 	buttons[3].setVisAct(true);
@@ -58,6 +58,75 @@ void Menu::reset()
 	//reset res
 	setRes(800,600);
 }
+
+
+void Menu::OptionsReset() {
+	int w,h;
+	//store curent res
+	h = height;
+	w = width;
+	//change res for ez placment
+	height = 600;
+	width = 800;
+	setRes(width,height);
+	for(int i = 0;i<numBut;i++)
+	{
+		buttons[i].setActive(true);
+		buttons[i].setLoc(100+60*i,200+60*i,300,500);
+	}
+	buttons[0].setlable(L"arrow keys for moving");
+	buttons[0].setVisAct(true);
+	buttons[1].setlable(L"mouse for menus");
+	buttons[1].setVisAct(true);
+	buttons[2].setlable(L"also arrow keys for menus");
+	buttons[2].setVisAct(true);
+	buttons[3].setlable(L"Enter or click to select things in menus");
+	buttons[3].setVisAct(true);
+	buttons[4].setlable(L"Back to Main Menu");
+	buttons[4].setVisAct(true);
+	for(int i = 5;i<numBut;++i)
+	{
+		buttons[i].setlable(L"Blank");
+		buttons[i].setVisAct(false);
+	}
+	//reset res
+	setRes(800,600);
+}
+
+
+void Menu::CreditsReset() {
+	int w,h;
+	//store curent res
+	h = height;
+	w = width;
+	//change res for ez placment
+	height = 600;
+	width = 800;
+	setRes(width,height);
+	for(int i = 0;i<numBut;i++)
+	{
+		buttons[i].setLoc(100+60*i,200+60*i,300,500);
+	}
+	buttons[0].setlable(L"By AJ Rolle, Tyler Van Gastel,\n       and Josh Foley");
+	buttons[0].setVisable(true);
+	buttons[1].setlable(L"Battle Music from Pokemon");
+	buttons[1].setVisAct(false);
+	buttons[2].setlable(L"Battle Music from Pokemon");
+	buttons[2].setVisable(true);
+	buttons[3].setlable(L"Menu music and game music from metal gear");
+	buttons[3].setVisable(true);
+	buttons[4].setlable(L"Back to main menu");
+	buttons[4].setVisAct(true);
+	buttons[4].setActive(true);
+	for(int i = 5;i<numBut;++i)
+	{
+		buttons[i].setlable(L"Blank");
+		buttons[i].setVisAct(false);
+	}
+	//reset res
+	setRes(800,600);
+}
+
 
 
 
